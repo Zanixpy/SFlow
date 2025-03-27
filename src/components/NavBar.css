@@ -1,0 +1,112 @@
+
+.side-bar.open{
+    position: fixed;
+    background: linear-gradient(#0e0e64,#160b40);
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 93%;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    transition: right .3s ease-in-out;
+
+    
+}
+
+.side-bar.close{
+    position: fixed;
+    background: linear-gradient(#0e0e64,#160b40);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 97.5%;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    transition: right .3s ease-in-out;
+
+}
+
+.active{
+    opacity: 1;
+}
+
+
+.side-item{
+    display: block;
+    text-align: center;
+    margin-bottom: 40px;
+    text-decoration: none;
+    color: white;
+    opacity: .7;
+    font-size: 15px;
+}
+
+.side-item:hover{
+    opacity: 1;
+    transition: "opacity" .2s ease-in-out;
+}
+
+.side-user{
+    margin-top: 100px;
+    display: block;
+    text-align: center;
+    margin-bottom: 70px;
+    text-decoration: none;
+    opacity: 1;
+
+
+}
+
+.font-user{
+    margin-top: 50px;
+    font-size: 19px;
+    font-style: italic;
+    
+}
+
+.side-item:last-child{
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+.logo-item{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30px;
+    height: auto;
+}
+
+.lateral{
+    position: fixed;
+    top: 3%;
+    left: 4px;
+    width: 30px;
+    opacity: .9;
+    transition: all .2s ease-in-out;
+    margin-right: 10px;
+    margin-bottom: 10px
+}
+
+.lateral:hover{
+    cursor: pointer;
+    opacity: 1;
+    transition: all .2s ease-in-out;  
+}
+
+.area{
+    position: relative;
+    margin-bottom: 90px;
+}
+
+#input-area{
+    padding: 20px 30px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+#input-area:hover{
+    cursor: pointer;
+    opacity: .8;
+}
