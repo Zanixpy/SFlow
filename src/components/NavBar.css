@@ -27,11 +27,11 @@
 
 }
 
-.active{
-    opacity: 1;
+.img-fit{
+    width: 100%;
+    height: 100%;
+  object-fit: cover;
 }
-
-
 .side-item{
     display: block;
     text-align: center;
@@ -42,24 +42,34 @@
     font-size: 15px;
 }
 
+.side-active{
+    display: block;
+    text-align: center;
+    margin-bottom: 40px;
+    text-decoration: none;
+    color: white;
+    opacity: 1;
+    font-size: 15px;
+}
+
 .side-item:hover{
     opacity: 1;
     transition: "opacity" .2s ease-in-out;
 }
 
 .side-user{
-    margin-top: 100px;
-    display: block;
-    text-align: center;
-    margin-bottom: 70px;
-    text-decoration: none;
-    opacity: 1;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 50px;
 
 
 }
 
 .font-user{
-    margin-top: 50px;
+    font-weight: bold;    
     font-size: 19px;
     font-style: italic;
     
@@ -92,7 +102,6 @@
 .lateral:hover{
     cursor: pointer;
     opacity: 1;
-    transition: all .2s ease-in-out;  
 }
 
 .area{
@@ -101,12 +110,26 @@
 }
 
 #input-area{
-    padding: 20px 30px;
-    border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
     background-color: white;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: opacity .3s ;
 }
 
 #input-area:hover{
+    opacity: .7;
     cursor: pointer;
-    opacity: .8;
+    border: 2px solid white;
 }
+
+.upload-text {
+    font-size: 30px;
+    color: #aaa;
+  }

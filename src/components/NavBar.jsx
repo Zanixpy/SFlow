@@ -1,18 +1,32 @@
-import { use, useId, useState } from "react";
+import { use, useId, useRef, useState } from "react";
 import "./NavBar.css";
 export function NavBar() {
   const [clicked, setclicked] = useState(true);
   const [selectedIndex, setindex] = useState(0);
-  const userProfile = [
+  const [image,setimage]=useState(null)
+
+  const ImgChange=e=>{
+    const file=e.target.files[0]
+    if (file) {
+      const reader= new FileReader()
+      reader.onloadend=()=>{
+        console.log(reader)
+        const uploadedImage=reader.result
+        setimage(uploadedImage)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const [userProfile,setuserprofile] = useState([
     {
       key:useId(),
-      itemName: "Zan",
+      itemName: "User",
       classItem: "font-user",
-      link: "",
-      src: "",
     },
-  ];
-  const dataItem = [
+    
+  ])
+  const [dataItem,setdataitem] = useState([
     { 
         key: useId(), 
         itemName: "Home", 
@@ -47,7 +61,7 @@ export function NavBar() {
       link: "",
       src: "/setting.png",
     },
-  ];
+  ])
 
   return (
     <div>
@@ -63,7 +77,8 @@ export function NavBar() {
           userProfile.map((user) => (
             <div className="side-user" key={user.key}>
               <label htmlFor="input-file" id="input-area">
-                <input type="file" accept="image/*" id="input-file" hidden />
+                <input type="file" accept="image/*" id="input-file" onChange={ImgChange} hidden />
+                {image ? <img className="img-fit" src={image} alt="" /> : <span className="upload-text">+</span>}
               </label>
               <p className={user.classItem}>{user.itemName}</p>
             </div>
@@ -74,10 +89,10 @@ export function NavBar() {
             <a
               href={item.link}
               key={item.key}
+              onClick={() => setindex(index)}
               className={
-                selectedIndex === index ? "side-item active" : "side-item"
+                selectedIndex === index ? "side-active" : "side-item"
               }
-              onClick={() => setindex((v) => (v = index))}
             >
               <img className="logo-item" src={item.src} alt="" />
               {item.itemName}
