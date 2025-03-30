@@ -3,7 +3,8 @@ footer{
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid #181818;
+    border: 1px solid #ceceea;
+    background-color: #F7FAFC ;
 }
 
 .footer-area{

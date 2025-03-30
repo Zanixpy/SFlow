@@ -10,12 +10,12 @@
 .header-nav {
     display: flex;
     align-items: center;
-    max-width: 900px;
-    height: 50px;
+    max-width: 1100px;
+    height: 40px;
     margin: 0 auto;
     border-radius: 10px;
     padding: 0 20px;
-    border: 1px solid #181818;
+    border: 1px solid #ceceea;
 }
 
 .header-nav a {
@@ -31,25 +31,21 @@
     margin-left: 0;
 }
 
-.header-nav a:nth-child(2){
-    opacity: .8;
-    transition: opacity .4s  ;
-}
 
-.header-nav a:nth-child(2):hover{
-    opacity: inherit;
-}
 
-.header-nav a:last-child{
-    border: 1px solid black;
+.sign-button{
     margin-left: auto;
-    padding: 10px 20px;
+}
+
+.sign-button a{
+    border: 1px solid rgba(206,206,234);
+    padding: 5px 15px;
     border-radius: 10px;
     font-weight: bold;
     transition: all .2s ;
     text-decoration: underline;
-
 }
+
 
 .header-nav a:last-child:hover{
     border: 1px solid #656565;
@@ -67,6 +63,6 @@
 }
 
 .logo {
-    width: 30px;
+    width: 70px;
     height: auto;
 }
