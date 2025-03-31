@@ -1,11 +1,13 @@
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { CTA } from "./CTA";
+import { Sign } from "./Sign";
 
-export function Struct() {
+export function SignPage() {
     return <>
         <Header/>
-        <CTA/>
+        <Sign/>
         <Footer/>
+
     </>
+    
 }

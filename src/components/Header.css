@@ -31,6 +31,10 @@
     margin-left: 0;
 }
 
+.header-nav a:nth-child(2):hover{
+    color: #2C7A7B;
+}
+
 
 
 .sign-button{
@@ -38,7 +42,6 @@
 }
 
 .sign-button a{
-    border: 1px solid rgba(206,206,234);
     padding: 5px 15px;
     border-radius: 10px;
     font-weight: bold;

@@ -13,7 +13,6 @@ export function Header() {
           </a>
           <div className="sign-button">
           <a href="">Sign in</a>
-          <a href="">Sign up</a>
           </div>
         </nav>
       </header>
