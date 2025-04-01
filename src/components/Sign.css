@@ -94,29 +94,7 @@
     color: #718096;
 }
 
-.btn-google {
-    width: 100%;
-    padding: 0.75rem;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: background 0.2s;
-}
 
-.btn-google:hover {
-    background: #f8fafc;
-}
-
-.btn-google img {
-    width: 20px;
-    height: 20px;
-}
 
 .signup-link {
     text-align: center;
@@ -143,4 +121,32 @@
 
 .signup-cta:hover {
     color: #2980b9;
+}
+
+/* Form validation styles */
+.form-group input.error {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+.form-group input.error:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 1px #e74c3c;
+}
+
+.error-message {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.success-message {
+    background-color: #def7ec;
+    color: #046c4e;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    margin: 1rem 0;
 }

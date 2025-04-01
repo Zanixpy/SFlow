@@ -9,8 +9,7 @@ import "./App.css"
 
 function App() {
   return <>
-     <SignPage/>
-    
+    <SignPage/>
   </>
 }
 

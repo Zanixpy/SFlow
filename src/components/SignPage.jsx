@@ -1,11 +1,11 @@
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Sign } from "./Sign";
+import { SignUp } from "./SignUp";
 
 export function SignPage() {
     return <>
         <Header/>
-        <Sign/>
+        <SignUp/>
         <Footer/>
 
     </>
