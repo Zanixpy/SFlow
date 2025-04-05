@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import { NavBar } from './components/NavBar'
-import { Struct } from './components/Structure'
-import { CTA } from './components/CTA'
-import { SignPage } from './components/SignPage'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import "./App.css"
+import { create } from 'zustand'
+import { CreateProject } from './components/CreateProject'
 
 
 function App() {
+
+  const useStore = create((set) => ({
+    projects: [],
+    addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
+  }))
+
   return <>
-    <SignPage/>
+      <CreateProject/>
   </>
 }
 
