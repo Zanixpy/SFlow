@@ -1,30 +1,35 @@
 import { useEffect, useId, useState } from "react"
 import { useStore } from "../store"
 
-export function CreateProject() {
+export function CreateCategorie() {
     const AddProject= useStore(state=> state.addProject)
     const DisplayProject= useStore(state=>state.projects)
     const [IsDone,setIsDone]= useState(true)
-    const [Project,setProject]=useState({
+    const [Categorie,setCategorie]=useState({
         ID:crypto.randomUUID(),
+        ProjetLink:"",
         Nom:"",
         BudgetTotal:"",
         BudgetRestant:0,
-        Categories:[],
+        Color:"",
         Task:[]
     })
    
     const [errors, setErrors]= useState({
         Nom:"",
-        BudgetTotal:""
+        BudgetTotal:"",
+        Color:""
     })
     
-    const ValidateProject = (data)=> {
+    const ValidateCategorie = (data)=> {
         const newErrors={
             Nom:"",
-            BudgetTotal:""
+            BudgetTotal:"",
+            Color:""
+
         }
-        const ProjectNom= DisplayProject.map(item=>item.Nom)
+        const CategorieNom= DisplayProject.map(item=>item.Categories.Nom)
+        const CategorieColor= DisplayProject.map(item=>item.Categories.Color)
         const test= ProjectNom.includes(data.Nom)
 
         if (!data.Nom) {
@@ -74,7 +79,16 @@ export function CreateProject() {
             type:"text",
             id:`1-nom`,
             field:"Nom",
-            placeholder:"Entre le nom du projet"
+            placeholder:"Entre le nom de la catégorie"
+        },
+        {
+            labelName:"Budget",
+            forHtml:"budget-total",
+            type:"number",
+            id:`0-budget`,
+            field:"BudgetTotal",
+            placeholder:"Entre le budget de cette catégorie"
+
         },
         {
             labelName:"Budget",
@@ -93,7 +107,7 @@ export function CreateProject() {
                     {IsDone && (
                         <>
                             <div className="m-8 p-10 max-h-100 max-w-100 rounded-xs border-1 ">
-                            <h1 className="mb-5 text-lg font-bold">New project</h1>
+                            <h1 className="mb-5 text-lg font-bold">New categorie</h1>
                             {ProjectField.map(item => (
                                 <div className="mb-2 p-2 " key={item.id}>
                                     <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>

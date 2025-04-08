@@ -1,19 +1,16 @@
 import { useState } from 'react'
 import "./App.css"
-import { create } from 'zustand'
 import { CreateProject } from './components/CreateProject'
-
+import { CreateCategorie } from './components/CreateCategorie'
 
 function App() {
-
-  const useStore = create((set) => ({
-    projects: [],
-    addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
-  }))
+  
+ 
 
   return <>
-      <CreateProject/>
-  </>
+      <CreateCategorie/>
+
+    </>
 }
 
 export default App
