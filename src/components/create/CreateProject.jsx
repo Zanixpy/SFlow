@@ -1,35 +1,31 @@
 import { useEffect, useId, useState } from "react"
-import { useStore } from "../store"
+import { useStore } from "../../store"
 
-export function CreateCategorie() {
+export function CreateProject({OnClose}) {
     const AddProject= useStore(state=> state.addProject)
     const DisplayProject= useStore(state=>state.projects)
-    const [IsDone,setIsDone]= useState(true)
-    const [Categorie,setCategorie]=useState({
+    const [Project,setProject]=useState({
         ID:crypto.randomUUID(),
-        ProjetLink:"",
         Nom:"",
         BudgetTotal:"",
         BudgetRestant:0,
-        Color:"",
-        Task:[]
+        Categories:[],
+        Task:[],
+        status:""
+
     })
    
     const [errors, setErrors]= useState({
         Nom:"",
-        BudgetTotal:"",
-        Color:""
+        BudgetTotal:""
     })
     
-    const ValidateCategorie = (data)=> {
+    const ValidateProject = (data)=> {
         const newErrors={
             Nom:"",
-            BudgetTotal:"",
-            Color:""
-
+            BudgetTotal:""
         }
-        const CategorieNom= DisplayProject.map(item=>item.Categories.Nom)
-        const CategorieColor= DisplayProject.map(item=>item.Categories.Color)
+        const ProjectNom= DisplayProject.map(item=>item.Nom)
         const test= ProjectNom.includes(data.Nom)
 
         if (!data.Nom) {
@@ -66,7 +62,7 @@ export function CreateCategorie() {
             await new Promise(resolve=>setTimeout(resolve,300))
             AddProject(Project)
             Project.ID=crypto.randomUUID()
-            setIsDone(true)
+            OnClose()
 
         }
         console.log(DisplayProject)
@@ -79,16 +75,7 @@ export function CreateCategorie() {
             type:"text",
             id:`1-nom`,
             field:"Nom",
-            placeholder:"Entre le nom de la catégorie"
-        },
-        {
-            labelName:"Budget",
-            forHtml:"budget-total",
-            type:"number",
-            id:`0-budget`,
-            field:"BudgetTotal",
-            placeholder:"Entre le budget de cette catégorie"
-
+            placeholder:"Entre le nom du projet"
         },
         {
             labelName:"Budget",
@@ -104,12 +91,13 @@ export function CreateCategorie() {
 
     return (
             <div className="flex items-center">
-                    {IsDone && (
-                        <>
-                            <div className="m-8 p-10 max-h-100 max-w-100 rounded-xs border-1 ">
-                            <h1 className="mb-5 text-lg font-bold">New categorie</h1>
+                    <div className="m-8 p-10 max-h-100 max-w-100 rounded-xs border-1 ">
+                        <div className="flex items-center">
+                            <h1 className="text-lg font-bold mr-5">New project</h1>
+                            <input className="border-1 px-3 py-1 rounded-sm text-sm" type="button" value="X" onClick={()=>OnClose()} />
+                        </div>
                             {ProjectField.map(item => (
-                                <div className="mb-2 p-2 " key={item.id}>
+                                <div className="my-5 p-2 " key={item.id}>
                                     <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
                                     <input 
                                         className="underline"
@@ -126,10 +114,6 @@ export function CreateCategorie() {
                             ))}
                             <input className="mt-5 border-1 px-5 py-2 rounded-sm" type="button" value="Create" onClick={handleSubmit} />
                             </div>
-
-                        </>
-                    )}
-
             </div>
     )
         

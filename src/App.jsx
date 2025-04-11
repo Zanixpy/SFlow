@@ -1,15 +1,13 @@
 import { useState } from 'react'
 import "./App.css"
-import { CreateProject } from './components/CreateProject'
-import { CreateCategorie } from './components/CreateCategorie'
+import { ProjectsPage } from './components/pages/ProjectsPage'
 
 function App() {
   
  
 
   return <>
-      <CreateCategorie/>
-
+      <ProjectsPage/>
     </>
 }
 
