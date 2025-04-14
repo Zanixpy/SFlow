@@ -65,7 +65,6 @@ export function CreateProject({OnClose}) {
             OnClose()
 
         }
-        console.log(DisplayProject)
     }
 
     const ProjectField=[
@@ -73,7 +72,7 @@ export function CreateProject({OnClose}) {
             labelName:"Nom",
             forHtml:"nom",
             type:"text",
-            id:`1-nom`,
+            id:`nom`,
             field:"Nom",
             placeholder:"Entre le nom du projet"
         },
@@ -81,7 +80,7 @@ export function CreateProject({OnClose}) {
             labelName:"Budget",
             forHtml:"budget-total",
             type:"number",
-            id:`0-budget`,
+            id:`budget`,
             field:"BudgetTotal",
             placeholder:"Entre le budget du projet"
 
