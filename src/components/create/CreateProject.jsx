@@ -93,7 +93,7 @@ export function CreateProject({OnClose}) {
                     <div className="m-8 p-10 max-h-100 max-w-100 rounded-xs border-1 ">
                         <div className="flex items-center">
                             <h1 className="text-lg font-bold mr-5">New project</h1>
-                            <input className="border-1 px-3 py-1 rounded-sm text-sm" type="button" value="X" onClick={()=>OnClose()} />
+                            <input className="ml-auto border-1 px-5 py-2 rounded-sm text-[20px] bg-red-500 hover:bg-red-700 text-white" type="button" value="X" onClick={()=>OnClose()} />
                         </div>
                             {ProjectField.map(item => (
                                 <div className="my-5 p-2 " key={item.id}>
@@ -111,7 +111,7 @@ export function CreateProject({OnClose}) {
                                     )}
                                 </div>
                             ))}
-                            <input className="mt-5 border-1 px-5 py-2 rounded-sm" type="button" value="Create" onClick={handleSubmit} />
+                            <input className="mt-5 border-1 px-5 py-2 rounded-sm hover:bg-purple-400 hover:text-white" type="button" value="Create" onClick={handleSubmit} />
                             </div>
             </div>
     )
