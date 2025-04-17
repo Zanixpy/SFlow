@@ -2,6 +2,8 @@ import { useUserStore } from "../../store/useUserStore.js"
 import { useState } from "react"
 import { CreateProject } from "../create/CreateProject.jsx"
 import { useNavigate } from "react-router-dom"
+import { CreateButton } from "../ui/CreateButton.jsx"
+import { Box } from "../ui/Box.jsx"
 
 export function ProjectsList() {
     const DisplayProject = useUserStore(state => state.projects)
@@ -11,16 +13,10 @@ export function ProjectsList() {
     const navigate= useNavigate()
 
     return (
-        <div className="items-center">
-            <div className="m-8 p-10 min-h-160 w-280 max-w-280 rounded-sm border-1">
-                <div className="flex items-center">
-                    <h1 className="mr-5">Projects</h1>
-                    <input 
-                        className="border-1 px-3 py-1 rounded-sm text-sm hover:bg-purple-400 hover:text-white" 
-                        type="button" 
-                        value="+" 
-                        onClick={() => setShowCreateProject(true)} 
-                    />
+        <Box h={"180"} w={"280"}>
+                <div className="flex justify-between items-center">
+                    <h1>Projects</h1>
+                    <CreateButton OnClick={() => setShowCreateProject(true)} Value={"+"} px={3} py={1} />
                 </div>
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
                 <ul className="block">
@@ -30,12 +26,11 @@ export function ProjectsList() {
                         <p className="flex-1">{item.BudgetTotal}€</p>
                         <p className="flex-1">Echeance</p>
                         <p className="flex-1">Priorité</p>
-
                         <input className="ml-auto" type="button" value="Status" />
                     </li>
                 )}
                 </ul>
-            </div>
-        </div>
+       
+        </Box>
     )
 }

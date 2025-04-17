@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useUserStore } from "../../store/useUserStore.js"
+import { DeleteButton } from "../ui/DeleteButton.jsx"
 
 export function CreateProjectDetails({id}) {
     const DisplayProject = useUserStore(state=>state.projects)
@@ -14,9 +15,9 @@ export function CreateProjectDetails({id}) {
         <>
         <div className=" min-h-screen ">
             <div className="m-4 p-4">
-                <div className="flex items-center justify-between">
-                    <h1 className="flex-1 text-[40px] text-black underline">{DisplayProject[id] && DisplayProject[id].Nom}</h1>
-                    <input className="ml-auto border-1 px-5 py-2 rounded-sm text-[20px] bg-red-500 hover:bg-red-700 text-white" onClick={OnDelete} type="button" value="X"/>
+                <div className="flex items-center justify-between ">
+                    <h1 className="text-[40px] text-black underline">{DisplayProject[id] && DisplayProject[id].Nom}</h1>
+                    <DeleteButton OnClick={OnDelete} px={"5"} py={"2"} font_size="20" />  
                 </div>
                 <div className="flex items-center my-20">
                     <div className="text-center min-h-[200px] min-w-[200px] border-1 rounded-full p-10">

@@ -1,7 +1,7 @@
 
 export function Dashboard() {
    return (
-        <div className="ml-64 p-4">
+        <div className="mt-20 min-w-200 p-4">
             Dashboard
         </div>
     )

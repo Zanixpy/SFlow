@@ -1,5 +1,8 @@
 import { useEffect, useId, useState } from "react"
 import { useUserStore } from "../../store/useUserStore.js";
+import { CreateButton } from "../ui/CreateButton.jsx";
+import { DeleteButton } from "../ui/DeleteButton.jsx";
+import { Box } from "../ui/Box.jsx";
 
 export function CreateProject({OnClose}) {
     const AddProject= useUserStore(state=> state.addProject)
@@ -89,11 +92,10 @@ export function CreateProject({OnClose}) {
 
 
     return (
-            <div className="flex items-center">
-                    <div className="m-8 p-10 max-h-100 max-w-100 rounded-xs border-1 ">
-                        <div className="flex items-center">
-                            <h1 className="text-lg font-bold mr-5">New project</h1>
-                            <input className="ml-auto border-1 px-5 py-2 rounded-sm text-[20px] bg-red-500 hover:bg-red-700 text-white" type="button" value="X" onClick={()=>OnClose()} />
+             <Box h={"100"} w={"100"} >
+                    <div className="flex items-center">
+                        <h1 className="text-lg font-bold mr-5">New project</h1>
+                        <DeleteButton OnClick={()=>OnClose()} px={"4"} py={"2"} />
                         </div>
                             {ProjectField.map(item => (
                                 <div className="my-5 p-2 " key={item.id}>
@@ -109,11 +111,10 @@ export function CreateProject({OnClose}) {
                                     {errors[item.field] && (
                                         <span className="block text-sm mt-1 text-red-400 ">{errors[item.field]}</span>
                                     )}
-                                </div>
+                        </div>
                             ))}
-                            <input className="mt-5 border-1 px-5 py-2 rounded-sm hover:bg-purple-400 hover:text-white" type="button" value="Create" onClick={handleSubmit} />
-                            </div>
-            </div>
+                        <CreateButton OnClick={handleSubmit} Value={"Create"} px={"4"} py={"2"} />  
+            </Box>
     )
         
 

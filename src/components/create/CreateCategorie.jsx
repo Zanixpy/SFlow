@@ -71,7 +71,8 @@ export function CreateCategorie({id}) {
       newErrors.BudgetTotal = "Le sous-budget attribué ne peut pas être supérieure au budget du projet";
     }
 
-    if(!data.Color || data.Color===""){
+    if(colorVal.availble.includes(data.Color)===false){
+      newErrors.Color="Choissisez une couleur valable"
       
     }
 

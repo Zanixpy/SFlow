@@ -4,6 +4,7 @@ import { ProjectDetails } from '../pages/ProjectDetails'
 import { Home } from '../pages/Home.Jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { NavBar } from "../components/layout/Navbar.jsx"
+import { Footer } from '../components/layout/Footer.jsx'
 
 
 export function AppRoutes() {
@@ -19,8 +20,8 @@ export function AppRoutes() {
             <Route path='/projects' element={<Projects/>} />
             <Route path='/projects/:id' element={<ProjectDetails/>} />
             <Route path='/setting' element={<Dashboard/>} />
-
-        </Routes>        
+        </Routes>
+        <Footer/>        
         </BrowserRouter>
     )
     
