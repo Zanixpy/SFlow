@@ -1,11 +1,13 @@
-import { useStore } from "../../store.js"
+import { useUserStore } from "../../store/useUserStore.js"
 import { useState } from "react"
 import { CreateProject } from "../create/CreateProject.jsx"
 import { useNavigate } from "react-router-dom"
 
 export function ProjectsList() {
-    const DisplayProject = useStore(state => state.projects)
+    const DisplayProject = useUserStore(state => state.projects)
+
     const [showCreateProject, setShowCreateProject] = useState(false)
+    
     const navigate= useNavigate()
 
     return (
@@ -25,7 +27,7 @@ export function ProjectsList() {
                 {DisplayProject && DisplayProject.map((item,index)=>
                     <li key={item.ID} onClick={()=>navigate(`/projects/${index}`)} className="flex justify-between hover:bg-purple-400 hover:text-white items-center h-15 p-4 max-w-260 rounded-sm border-1 my-5">
                         <p className="flex-1">{item.Nom}</p>
-                        <p className="flex-1">{item.BudgetTotal}</p>
+                        <p className="flex-1">{item.BudgetTotal}€</p>
                         <p className="flex-1">Echeance</p>
                         <p className="flex-1">Priorité</p>
 

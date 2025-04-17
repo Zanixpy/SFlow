@@ -1,9 +1,9 @@
 import { useEffect, useId, useState } from "react"
-import { useStore } from "../../store"
+import { useUserStore } from "../../store/useUserStore.js";
 
 export function CreateProject({OnClose}) {
-    const AddProject= useStore(state=> state.addProject)
-    const DisplayProject= useStore(state=>state.projects)
+    const AddProject= useUserStore(state=> state.addProject)
+    const DisplayProject= useUserStore(state=>state.projects)
     const [Project,setProject]=useState({
         ID:crypto.randomUUID(),
         Nom:"",
@@ -39,7 +39,7 @@ export function CreateProject({OnClose}) {
 
         if (!data.BudgetTotal || data.BudgetTotal==="0") {
             newErrors.BudgetTotal="Le budget du project est requis"
-        }else if (data.BudgetTotal[0]==="0" || data.BudgetTotal<0 ){
+        }else if (data.BudgetTotal[0]==="0" || data.BudgetTotal<0 || data.BudgetTotal.includes("e") ){
             newErrors.BudgetTotal="Veuillez rentrer un budget valide"
         }
     
@@ -61,10 +61,10 @@ export function CreateProject({OnClose}) {
         if (hasErrors===false) {
             await new Promise(resolve=>setTimeout(resolve,300))
             AddProject(Project)
-            Project.ID=crypto.randomUUID()
             OnClose()
-
         }
+        console.log(DisplayProject)
+
     }
 
     const ProjectField=[

@@ -1,12 +1,19 @@
-# React + Vite
+SFlow - App de suivi de projet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenue sur SFlow, ce projet est une application web full front-end développée avec React, React Router, et SCSS.
 
-Currently, two official plugins are available:
+🚀 Objectifs du projet
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Développer une application React moderne avec une navigation dynamique et performante grâce à React Router.
+- Appliquer une architecture modulaire et des pratiques de développement front-end professionnelles.
+- Travailler sur une expérience utilisateur fluide, avec une navigation intuitive et des animations.
 
-## Expanding the ESLint configuration
+🛠️ Technologies utilisées
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React : Librairie JavaScript pour créer des interfaces interactives.
+
+React Router : Outil de navigation entre les pages.
+
+Tailwind CSS : Framework utilitaire pour le style rapide par classes.
+
+JavaScript ES6+ : Syntaxe moderne et fonctionnalités avancées.

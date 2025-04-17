@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import { useStore } from "../../store.js"
+import { useUserStore } from "../../store/useUserStore.js"
 
 export function CreateProjectDetails({id}) {
-    const DisplayProject = useStore(state=>state.projects)
-    const RemoveProject = useStore(state=>state.RemoveProject)
+    const DisplayProject = useUserStore(state=>state.projects)
+    const RemoveProject = useUserStore(state=>state.RemoveProject)
     const navigate= useNavigate()
     const OnDelete=()=>{
         RemoveProject(DisplayProject[id])
