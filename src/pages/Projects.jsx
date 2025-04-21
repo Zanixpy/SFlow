@@ -1,9 +1,9 @@
-import { ProjectsList } from "../components/project/ProjectList.jsx"
+import { ProjectsList } from "../components/project/ProjectList"
 
 
 export function Projects() {
     return (
-        <div className="mt-20 flex-1 p-4">
+        <div className="mt-20 mb-10 p-4">
             <ProjectsList/>
         </div>
         

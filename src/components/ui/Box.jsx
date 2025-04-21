@@ -1,14 +1,11 @@
-import { Outlet } from "react-router-dom";
-
-
-export function Box({h, w, children}) {
+export function Box({h, w, children, className = '', padding = 'p-5', margin = 'm-5'}) {
+    const maxWidth = w ? `max-w-${w}` : 'max-w-full';
+    const maxHeight = h ? `max-h${h}` : 'max-h-full';
 
     return (
-        <div className="flex items-center">
-            <div className={`m-8 p-10 max-h-${h} w-${w} rounded-sm border-1`}>
+            <div className={`${margin} ${padding} ${maxWidth} ${maxHeight} rounded border border-gray-200 shadow-sm ${className}`}>
                 {children}
             </div>
-        </div>
     )
     
 }

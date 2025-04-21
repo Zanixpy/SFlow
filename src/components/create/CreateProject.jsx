@@ -59,7 +59,6 @@ export function CreateProject({OnClose}) {
         e.preventDefault()
         const newErrors= ValidateProject(Project)
         setErrors(newErrors)
-
         const hasErrors= Object.values(newErrors).some(error => error !== "")
         if (hasErrors===false) {
             await new Promise(resolve=>setTimeout(resolve,300))
@@ -92,13 +91,13 @@ export function CreateProject({OnClose}) {
 
 
     return (
-             <Box h={"100"} w={"100"} >
-                    <div className="flex items-center">
+             <Box w={"100"} className="bg-white">
+                    <div className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
-                        <DeleteButton OnClick={()=>OnClose()} px={"4"} py={"2"} />
+                        <DeleteButton OnClick={()=>OnClose()}/>
                         </div>
                             {ProjectField.map(item => (
-                                <div className="my-5 p-2 " key={item.id}>
+                                <div className="my-5 max-w-100 p-2 " key={item.id}>
                                     <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
                                     <input 
                                         className="underline"
@@ -113,7 +112,9 @@ export function CreateProject({OnClose}) {
                                     )}
                         </div>
                             ))}
-                        <CreateButton OnClick={handleSubmit} Value={"Create"} px={"4"} py={"2"} />  
+                        <div className="mt-7 text-right max-w-100">
+                            <CreateButton OnClick={handleSubmit} Value={"Create"} />
+                        </div>  
             </Box>
     )
         

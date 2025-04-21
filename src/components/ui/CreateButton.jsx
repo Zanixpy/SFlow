@@ -1,7 +1,7 @@
 
-export function CreateButton({OnClick,Value,px=2,py=2}) {
+export function CreateButton({OnClick,Value}) {
 
-    return <input className={`mt-5 border-1 px-${px} py-${py} rounded-sm hover:bg-purple-400 hover:text-white`} type="button" value={Value} onClick={OnClick} />
+    return <input className=" border-1 px-4 py-2 rounded-sm hover:bg-purple-400 hover:text-white" type="button" value={Value} onClick={OnClick} />
     
     
 }
