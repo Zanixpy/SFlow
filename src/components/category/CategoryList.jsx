@@ -11,15 +11,16 @@ export function CategoryList({id}) {
     const ProjectCategorie= DisplayProject[id].Categories
 
 
-    return <> 
+    return <div className="flex items-center">
             {ProjectCategorie && ProjectCategorie.map(item=>
-                <CircleBoxCate padding="p-6" color={item.Color} className="mx-auto my-10 py-10 bg-gray-50">
-                    <div className="text-center">
-                                <p>item.Nom</p>
-                                <p className="text-[30px]">{DisplayProject[id] && DisplayProject[id].BudgetTotal}€</p>
-                                <p className="text-[15px] mt-5" >Budget restant : {DisplayProject[id] && DisplayProject[id].BudgetRestant} </p>
+                <CircleBoxCate h={"50"} w={"50"} padding="p-10" color={item.Color} className="" key={item.ID}>
+                    <div className="text-center max-w-100">
+                                <p className="mb-2">{item.Nom}</p>
+                                <p className="text-[20px]">{item.BudgetTotal}€</p>
+                                <p className="text-[15px] mt-5" >Budget restant : {item.BudgetRestant} </p>
                     </div>
                 </CircleBoxCate>
             )}
-    </>
+        </div>
+        
 }

@@ -100,7 +100,6 @@ export function CreateProject({OnClose}) {
                                 <div className="my-5 max-w-100 p-2 " key={item.id}>
                                     <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
                                     <input 
-                                        className="underline"
                                         type={item.type}
                                         id={item.forHtml}
                                         value={Project[item.field]}

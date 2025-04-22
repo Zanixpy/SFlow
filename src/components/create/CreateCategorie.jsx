@@ -10,14 +10,14 @@ export function CreateCategorie({ id, OnClose }) {
 
   const [colorVal, setcolorVal] = useState({
     availble: [
-      { color: "green", idColor: 0 },
-      { color: "pink", idColor: 1 },
-      { color: "yellow", idColor: 2 },
-      { color: "orange", idColor: 3 },
-      { color: "purple", idColor: 4 },
-      { color: "red", idColor: 5 },
-      { color: "blue", idColor: 6 },
-      { color: "grey", idColor: 7 },
+      { color: "green", idColor: "0g" },
+      { color: "pink", idColor: "1p" },
+      { color: "yellow", idColor: "2y" },
+      { color: "orange", idColor: "3o" },
+      { color: "purple", idColor: "4p" },
+      { color: "red", idColor: "5r" },
+      { color: "blue", idColor: "6b" },
+      { color: "gray", idColor: "7g" },
     ],
     unavailable: [],
   });
@@ -74,12 +74,9 @@ export function CreateCategorie({ id, OnClose }) {
         "The allocated sub-budget cannot exceed the project budget.";
     }
 
-    if (colorVal.availble.includes(data.Color) === false) {
+    if (!colorVal.availble.some(item=>item.color === data.Color)) {
       newErrors.Color = "Select a color that is acceptable";
-      console.log(data.Color);
-    } else {
-      console.log(data.Color);
-    }
+    } 
 
     return newErrors;
   };
@@ -98,6 +95,15 @@ export function CreateCategorie({ id, OnClose }) {
     if (hasErrors === false) {
       await new Promise((resolve) => setTimeout(resolve, 300));
       Categorie.ProjetLink = ProjectTarget.ID;
+      if (colorVal.availble.some(item => item.color === Categorie.Color)) {
+        // Trouver l'objet couleur sélectionné
+        const selectedColor = colorVal.availble.find(item => item.color === Categorie.Color);    
+        // Mettre à jour l'état avec la nouvelle répartition des couleurs
+        setcolorVal(prevState => ({
+          availble: prevState.availble.filter(item => item.color !== Categorie.Color),
+          unavailable: [...prevState.unavailable, selectedColor]
+        }));
+      }
       ProjectTarget.Categories.push(Categorie);
       OnClose();
     }
@@ -133,7 +139,7 @@ export function CreateCategorie({ id, OnClose }) {
   ];
 
   return (
-    <Box w={"200"} className="bg-white">
+    <Box w={"100"} className="bg-white">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
         <DeleteButton OnClick={OnClose} />
