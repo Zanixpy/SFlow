@@ -9,16 +9,22 @@ import { CreateCategorie } from "./CreateCategorie.jsx"
 import { CategoryList } from "../category/CategoryList.jsx"
 
 export function CreateProjectDetails({id}) {
+
+    // State Management
     const DisplayProject = useUserStore(state=>state.projects)
     const RemoveProject = useUserStore(state=>state.RemoveProject)
-    const [showCreateCategorie, setShowCreateCategorie] = useState(false)
 
+    // Variable
+    const [showCreateCategorie, setShowCreateCategorie] = useState(false)
     const navigate= useNavigate()
+
+    // Function on delete
     const OnDelete=()=>{
         RemoveProject(DisplayProject[id])
-        navigate(-1)
+        navigate("/projects")
     }
     
+    // Return JSX
     return (
                 <div className="mx-10 my-20 p-4">
                     <div className="flex items-center justify-between ">

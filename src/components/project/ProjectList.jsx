@@ -4,6 +4,7 @@ import { CreateProject } from "../create/CreateProject.jsx"
 import { useNavigate } from "react-router-dom"
 import { CreateButton } from "../ui/CreateButton.jsx"
 import { Box } from "../ui/Box.jsx"
+import { CreateStatus } from "../create/CreateStatus.jsx"
 
 export function ProjectsList() {
     const DisplayProject = useUserStore(state => state.projects)
@@ -30,6 +31,8 @@ export function ProjectsList() {
                     </li>
                 )}
                 </ul>
+
+                <CreateStatus/>
        
         </Box>
     )

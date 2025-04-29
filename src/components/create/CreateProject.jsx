@@ -5,8 +5,11 @@ import { DeleteButton } from "../ui/DeleteButton.jsx";
 import { Box } from "../ui/Box.jsx";
 
 export function CreateProject({OnClose}) {
+    // State management
     const AddProject= useUserStore(state=> state.addProject)
     const DisplayProject= useUserStore(state=>state.projects)
+
+    // Main variables, project content and errors
     const [Project,setProject]=useState({
         ID:crypto.randomUUID(),
         Nom:"",
@@ -22,39 +25,44 @@ export function CreateProject({OnClose}) {
         Nom:"",
         BudgetTotal:""
     })
-    
+
+
+    // Function to check errors
     const ValidateProject = (data)=> {
         const newErrors={
             Nom:"",
             BudgetTotal:""
         }
-        const ProjectNom= DisplayProject.map(item=>item.Nom)
-        const test= ProjectNom.includes(data.Nom)
+
+        const TestNomAvaible= DisplayProject.some(item=>item.Nom === data.Nom)
 
         if (!data.Nom) {
-            newErrors.Nom="Le nom du project est requis"            
+            newErrors.Nom="The name of project is required"            
         }   else if (data.Nom.length > 25) {
-            newErrors.Nom="Le nom du project doit être inférieure à 25 lettres"      
-        }else if(test){
-            newErrors.Nom="Ce nom de projet existe déjà"      
+            newErrors.Nom="The name of project must be less than 25 characters"      
+        }else if(TestNomAvaible){
+            newErrors.Nom="This name already exist"      
         }
         
 
         if (!data.BudgetTotal || data.BudgetTotal==="0") {
-            newErrors.BudgetTotal="Le budget du project est requis"
+            newErrors.BudgetTotal="The budget is required"
         }else if (data.BudgetTotal[0]==="0" || data.BudgetTotal<0 || data.BudgetTotal.includes("e") ){
-            newErrors.BudgetTotal="Veuillez rentrer un budget valide"
+            newErrors.BudgetTotal="Please enter a valid budget"
         }
     
         return newErrors
     }
 
+
+    // Handle the change of value on input
     const handleChange=(e,field)=> {
-        const value = e.target.value.trim()
+        const value = e.target.value
         setProject(prev=> ({...prev,[field]:value}))
 
     }
 
+    // Handle the submit of "project form"
     const handleSubmit = async e => {
         e.preventDefault()
         const newErrors= ValidateProject(Project)
@@ -69,6 +77,7 @@ export function CreateProject({OnClose}) {
 
     }
 
+    // data for inputs
     const ProjectField=[
         {
             labelName:"Nom",
@@ -85,11 +94,10 @@ export function CreateProject({OnClose}) {
             id:`budget`,
             field:"BudgetTotal",
             placeholder:"Entre le budget du projet"
-
         }
     ]
 
-
+    // Return JSX
     return (
              <Box w={"100"} className="bg-white">
                     <div className="flex items-center max-w-100">
