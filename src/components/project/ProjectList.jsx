@@ -10,8 +10,21 @@ export function ProjectsList() {
     const DisplayProject = useUserStore(state => state.projects)
 
     const [showCreateProject, setShowCreateProject] = useState(false)
+    const [showCreateStatus, setShowCreateStatus]= useState(false)
+
+    
     
     const navigate= useNavigate()
+    const [status,setstatus]=useState({
+        id:"1TD",
+        activity:"To do", 
+        color:"bg-black",
+    })
+
+    const handleStatusChange = (newStatus) => {
+        setstatus(newStatus)
+        setShowCreateStatus(false)
+    }
 
     return (
         <Box w={"800"} className="bg-white">
@@ -22,18 +35,27 @@ export function ProjectsList() {
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
                 <ul className="block">
                 {DisplayProject && DisplayProject.map((item,index)=>
-                    <li key={item.ID} onClick={()=>navigate(`/projects/${index}`)} className="flex justify-between items-center p-4 my-4 rounded border border-gray-200 hover:bg-purple-400 hover:text-white transition-colors cursor-pointer">
+                    <li key={item.ID} onClick={()=>navigate(`/projects/${index}`)} className="flex justify-between items-center py-4 pr-4 my-4 max-h-20 max-w-8xl rounded border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer">
+                        <div className={`${status.color} h-20 w-5 mr-5 rounded-xs `}></div>
                         <p className="flex-1">{item.Nom}</p>
                         <p className="flex-1">{item.BudgetTotal}€</p>
                         <p className="flex-1">Echeance</p>
                         <p className="flex-1">Priorité</p>
-                        <input className="ml-auto px-3 py-1 rounded bg-gray-100 hover:bg-gray-200" type="button" value="Status" />
+                        <input 
+                            className="ml-auto px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer" 
+                            type="button" 
+                            value={status.activity}
+                            id={status.id}
+                            onClick={(event) => {
+                                event.stopPropagation()
+                                setShowCreateStatus(val => !val)
+                            }} 
+                        />
+                        {showCreateStatus && <CreateStatus id={index} value={status} setvalue={handleStatusChange}/>}
                     </li>
+                 
                 )}
                 </ul>
-
-                <CreateStatus/>
-       
         </Box>
     )
 }

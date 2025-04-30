@@ -1,10 +1,21 @@
-export function Status({Onclick,color,activity}) {
+export function Status({projet,color,setvalue,status,activity,borderEnable}) {
 
-    const colorTest = color==="black" ? `bg-black` : `bg-${color}-400` 
+    const border = borderEnable && `border-b-1 border-gray-300` 
 
-    return <div className="flex items-center">
-                         <div className={`${colorTest} p-1 mr-2 w-[15px] h-[15px] rounded-full border-1`}></div>
-                         <p className="">{activity}</p>
-            </div>
+    const handleClick = e => {
+        e.stopPropagation()
+        const findStatut = status.find(item => item.activity === activity)
+        setvalue({
+            id: findStatut.id,
+            activity: findStatut.activity,
+            color: findStatut.color,
+        })
+        projet.status=findStatut
+    }
+
+    return <div onClick={handleClick} className={`flex items-center p-2 max-w-30 max-h-30 ${border} hover:bg-gray-100 transition-[var(bg-gray-100)] cursor-pointer `}>
+                         <div className={`${color} p-1 mr-2 rounded-full border-1`}></div>
+                         <p>{activity}</p>
+            </div> 
 
 }

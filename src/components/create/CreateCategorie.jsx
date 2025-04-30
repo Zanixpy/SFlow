@@ -4,7 +4,8 @@ import { CreateButton } from "../ui/CreateButton.jsx";
 import { DeleteButton } from "../ui/DeleteButton.jsx";
 import { Box } from "../ui/Box.jsx";
 
-export function CreateCategorie({ id, OnClose }) {
+
+export function CreateCategorie({ id, OnClose,  }) {
 
   // State Management
   const DisplayProject = useUserStore((state) => state.projects)
@@ -102,27 +103,17 @@ export function CreateCategorie({ id, OnClose }) {
 
   // Handle the submit of "categorie form"
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newErrors = ValidateCategorie(Categorie);
-    setErrors(newErrors);
-
+    e.preventDefault()
+    const newErrors = ValidateCategorie(Categorie)
+    setErrors(newErrors)
     const hasErrors = Object.values(newErrors).some((error) => error !== "");
     if (hasErrors === false) {
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      Categorie.ProjetLink = ProjectTarget.ID;
-      if (colorVal.availble.some(item => item.color === Categorie.Color)) {
-        // Trouver l'objet couleur sélectionné
-        const selectedColor = colorVal.availble.find(item => item.color === Categorie.Color);    
-        // Mettre à jour l'état avec la nouvelle répartition des couleurs
-        setcolorVal(prevState => ({
-          availble: prevState.availble.filter(item => item.color !== Categorie.Color),
-          unavailable: [...prevState.unavailable, selectedColor]
-        }));
-      }
-      ProjectTarget.Categories.push(Categorie);
-      OnClose();
+      await new Promise((resolve) => setTimeout(resolve, 300))
+      Categorie.ProjetLink = ProjectTarget.ID
+      ProjectTarget.Categories.push(Categorie)
+      OnClose()
     }
-    console.log(ProjectTarget);
+    
   }
 
   // data for inputs

@@ -3,7 +3,7 @@ export function Box({h, w, children, className = '', padding = 'p-5', margin = '
     const maxHeight = h ? `max-h${h}` : 'max-h-full';
 
     return (
-            <div className={`${margin} ${padding} ${maxWidth} ${maxHeight} rounded border border-gray-200 shadow-sm ${className}`}>
+            <div className={`${margin} ${padding} ${maxWidth} ${maxHeight} rounded border border-gray-200 shadow-sm transition-discrete ${className}`}>
                 {children}
             </div>
     )
