@@ -6,49 +6,50 @@ import { Box } from "../ui/Box.jsx";
 
 export function CreateProject({OnClose}) {
     // State management
-    const AddProject= useUserStore(state=> state.addProject)
-    const DisplayProject= useUserStore(state=>state.projects)
+    const addProject= useUserStore(state=> state.addProject)
+    const allProjects= useUserStore(state=>state.projects)
 
     // Main variables, project content and errors
-    const [Project,setProject]=useState({
-        ID:crypto.randomUUID(),
-        Nom:"",
-        BudgetTotal:"",
-        BudgetRestant:0,
-        Categories:[],
-        Task:[],
+    const [project,setProject]=useState({
+        id:crypto.randomUUID(),
+        name:"",
+        totalBudget:"",
+        remainingBudget:"",
+        spentBudget:"",
+        categories:[],
+        categoriesBudget:"",
+        task:[],
         status:""
 
     })
    
     const [errors, setErrors]= useState({
-        Nom:"",
-        BudgetTotal:""
+        name:"",
+        totalBudget:""
     })
 
 
     // Function to check errors
-    const ValidateProject = (data)=> {
+    const validateProject = (data)=> {
         const newErrors={
-            Nom:"",
-            BudgetTotal:""
+            name:"",
+            totalBudget:""
         }
 
-        const TestNomAvaible= DisplayProject.some(item=>item.Nom === data.Nom)
+        const nameIsHere = allProjects.some(item=>item.name === data.name)
 
-        if (!data.Nom) {
-            newErrors.Nom="The name of project is required"            
-        }   else if (data.Nom.length > 25) {
-            newErrors.Nom="The name of project must be less than 25 characters"      
-        }else if(TestNomAvaible){
-            newErrors.Nom="This name already exist"      
+        if (!data.name) {
+            newErrors.name="The name of project is required"            
+        }   else if (data.name.length > 25) {
+            newErrors.name="The name of project must be less than 25 characters"      
+        }else if(nameIsHere){
+            newErrors.name="This name already exist"      
         }
         
-
-        if (!data.BudgetTotal || data.BudgetTotal==="0") {
-            newErrors.BudgetTotal="The budget is required"
-        }else if (data.BudgetTotal[0]==="0" || data.BudgetTotal<0 || data.BudgetTotal.includes("e") ){
-            newErrors.BudgetTotal="Please enter a valid budget"
+        if (!data.totalBudget) {
+            newErrors.totalBudget="The budget is required"
+        }else if (data.totalBudget[0]==="0" || parseInt(data.totalBudget<0)){
+            newErrors.totalBudget="Please enter a valid budget"
         }
     
         return newErrors
@@ -65,55 +66,90 @@ export function CreateProject({OnClose}) {
     // Handle the submit of "project form"
     const handleSubmit = async e => {
         e.preventDefault()
-        const newErrors= ValidateProject(Project)
+        const newErrors= validateProject(project)
         setErrors(newErrors)
         const hasErrors= Object.values(newErrors).some(error => error !== "")
         if (hasErrors===false) {
             await new Promise(resolve=>setTimeout(resolve,300))
-            AddProject(Project)
+            addProject(project)
             OnClose()
         }
-        console.log(DisplayProject)
-
     }
 
     // data for inputs
-    const ProjectField=[
+    const dataInputs=[
         {
-            labelName:"Nom",
-            forHtml:"nom",
+            labelName:"Name",
+            forHtml:"name",
             type:"text",
-            id:`nom`,
-            field:"Nom",
-            placeholder:"Entre le nom du projet"
+            id:`name`,
+            field:"name",
+            placeholder:"Enter the name of project"
         },
         {
             labelName:"Budget",
-            forHtml:"budget-total",
+            forHtml:"totalBudget",
             type:"number",
-            id:`budget`,
-            field:"BudgetTotal",
-            placeholder:"Entre le budget du projet"
+            id:`totalBudget`,
+            field:"totalBudget",
+            placeholder:"Enter the budget of project"
         }
     ]
 
     // Return JSX
     return (
              <Box w={"100"} className="bg-white">
-                    <div className="flex items-center max-w-100">
+                    <div onKeyDown={(e) => {
+                            
+                        }} 
+                    className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
                         <DeleteButton OnClick={()=>OnClose()}/>
                         </div>
-                            {ProjectField.map(item => (
+                            {dataInputs.map(item =>(
                                 <div className="my-5 max-w-100 p-2 " key={item.id}>
-                                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
-                                    <input 
-                                        type={item.type}
-                                        id={item.forHtml}
-                                        value={Project[item.field]}
-                                        onChange={e=>handleChange(e,item.field)}
-                                        placeholder={item.placeholder}
-                                    />
+                                    {item.type==="number"? (<>
+                                        
+                                            <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                                            <input 
+                                                type={item.type}
+                                                id={item.forHtml}
+                                                value={project[item.field]}
+                                                onKeyDown={(e)=> {
+                                                    if (e.key==='e'|| e.key==='E' || e.key==='+' || e.key==='-') {
+                                                        e.preventDefault()
+                                                    }
+                                                }}
+                                                onChange={e=>handleChange(e,item.field)}
+                                                placeholder={item.placeholder}
+                                            />
+
+                                    </>):(<>
+
+                                        <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                                            <input 
+                                                type={item.type}
+                                                id={item.forHtml}
+                                                value={project[item.field]}
+                                                onKeyDown={(e)=> {
+                                                    const isValid = /^[a-zA-Z0-9 ]$/.test(e.key)
+                                                    const controlKeys = [
+                                                        'Backspace',
+                                                        'Delete',
+                                                        'ArrowLeft',
+                                                        'ArrowRight',
+                                                        'Tab'
+                                                      ]
+                                                    if (!isValid && !controlKeys.includes(e.key)) {
+                                                        e.preventDefault()
+                                                    }
+                                                }}
+                                                onChange={e=>handleChange(e,item.field)}
+                                                placeholder={item.placeholder}
+                                            />
+                                    
+                                    </>)}
+
                                     {errors[item.field] && (
                                         <span className="block text-sm mt-1 text-red-400 ">{errors[item.field]}</span>
                                     )}

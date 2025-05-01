@@ -5,6 +5,7 @@ import { useUserStore } from "../../store/useUserStore.js"
 
 export function CreateStatus({id,setvalue}) {
     const DisplayProject = useUserStore(state => state.projects)
+    const EditValueProject = useUserStore(state => state.EditProjectValue)
     const ProjectTarget = DisplayProject[id]
 
     const status=[
@@ -24,7 +25,8 @@ export function CreateStatus({id,setvalue}) {
                         borderEnable={item.border} 
                         projet={ProjectTarget}
                         status={status}
-                        setvalue={setvalue} 
+                        setvalue={setvalue}
+                        editProject={EditValueProject}
                     />
                 )}
             </div>

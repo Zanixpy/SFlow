@@ -25,9 +25,6 @@ export function CreateProjectDetails({id}) {
     }
 
     // Effect pour surveiller les changements de catégories
-    useEffect(()=>{
-        console.log("yay")
-    },[ProjectTarget.Categories])
 
     // Return JSX
     return (
@@ -36,11 +33,12 @@ export function CreateProjectDetails({id}) {
                         <h1 className="text-[40px] text-black underline">{ProjectTarget.Nom}</h1>
                         <DeleteButton OnClick={OnDelete}/>  
                     </div>
-                    <CircleBox padding="p-6" className="mx-auto my-10 py-35 bg-gray-50"> 
+                    <CircleBox padding="p-6" className="mx-auto my-10 py-25 bg-gray-50"> 
                         <div className="text-center">
-                                <p>Overall budget :</p>
-                                <p className="text-[30px]">{ProjectTarget.BudgetTotal}€</p>
-                                <p className="text-[15px] mt-5" >Budget spent : {ProjectTarget.BudgetRestant} </p>
+                                <p className="mb-2" >Overall budget :</p>
+                                <p className="text-[30px] mb-5">{ProjectTarget.BudgetTotal}€</p>
+                                <p className="mb-2" >Remaining Budget :  </p>
+                                <p className="text-[30px]">{ProjectTarget.BudgetRestant}€</p>
                         </div>
                         <CreateButton OnClick={()=>setShowCreateCategorie(true)} Value={"+"} />
                     </CircleBox>

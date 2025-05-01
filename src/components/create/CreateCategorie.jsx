@@ -9,6 +9,7 @@ export function CreateCategorie({ id, OnClose,  }) {
 
   // State Management
   const DisplayProject = useUserStore((state) => state.projects)
+  const UpdateProject = useUserStore((state) => state.UpdateProjectBudget)
   const ProjectTarget = DisplayProject[id]
 
   // Main variables, colors, categorie content and errors
@@ -112,6 +113,7 @@ export function CreateCategorie({ id, OnClose,  }) {
       Categorie.ProjetLink = ProjectTarget.ID
       ProjectTarget.Categories.push(Categorie)
       OnClose()
+      UpdateProject(ProjectTarget)
     }
     
   }
