@@ -16,7 +16,7 @@ export function ProjectsList() {
 
 
     return (
-        <Box w={"800"} className="bg-white">
+        <Box  w={"350"} h={"200"} className="bg-white">
                 <div className="flex items-center">
                     <h1 className="mr-5 text-[25px] font-bold">Projects</h1>
                     <CreateButton OnClick={() => setShowCreateProject(true)} Value={"+"}  />

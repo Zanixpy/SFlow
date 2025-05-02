@@ -1,9 +1,9 @@
 export function CircleBoxCate({h, w, children, className = '', padding = 'p-5',margin = 'm-5',color=""}) {
-    const maxWidth = w ? `max-w-${w}` : 'max-w-100';
-    const maxHeight = h ? `max-h-${h}` : 'max-h-100';
+    const Width = w ? `w-${w}` : 'w-100';
+    const Height = h ? `h-${h}` : 'h-100';
 
     return (
-            <div className={`${margin} ${padding} ${maxWidth} ${maxHeight} rounded-full bg-${color}-300 border border-gray-200 shadow-sm ${className}`}>
+            <div className={`${margin} ${padding} ${Width} ${Height} rounded-full bg-${color}-300 border border-gray-200 shadow-sm ${className}`}>
                 {children}
             </div>
     )

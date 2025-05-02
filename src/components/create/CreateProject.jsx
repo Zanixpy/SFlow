@@ -6,8 +6,9 @@ import { Box } from "../ui/Box.jsx";
 
 export function CreateProject({OnClose}) {
     // State management
-    const addProject= useUserStore(state=> state.addProject)
     const allProjects= useUserStore(state=>state.projects)
+    const addProject= useUserStore(state=> state.addProject)
+    const editValue = useUserStore(state=>state.editValue )
 
     // Main variables, project content and errors
     const [project,setProject]=useState({
@@ -15,9 +16,8 @@ export function CreateProject({OnClose}) {
         name:"",
         totalBudget:"",
         remainingBudget:"",
-        spentBudget:"",
+        spentBudget:"0",
         categories:[],
-        categoriesBudget:"",
         task:[],
         status:{
             id:"1TD",
@@ -75,6 +75,7 @@ export function CreateProject({OnClose}) {
         if (hasErrors===false) {
             await new Promise(resolve=>setTimeout(resolve,300))
             addProject(project)
+            editValue(project,"remainingBudget",project.totalBudget)
             OnClose()
         }
     }
@@ -99,13 +100,11 @@ export function CreateProject({OnClose}) {
         }
     ]
 
+
     // Return JSX
     return (
-             <Box w={"100"} className="bg-white">
-                    <div onKeyDown={(e) => {
-                            
-                        }} 
-                    className="flex items-center max-w-100">
+             <Box w={"100"} h={"75"} className="bg-white">
+                    <div className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
                         <DeleteButton OnClick={()=>OnClose()}/>
                         </div>

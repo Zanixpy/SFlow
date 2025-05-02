@@ -11,10 +11,7 @@ export function Header() {
                             <img src={Logo} alt="Logo asso" className='w-18 h-8' />
                         </Link>
                         </div>
-                        <div className='flex-2 space-x-6'>
-                            <Link to="/home" className=" hover:text-gray-300">
-                                Home
-                            </Link>      
+                        <div className='flex-2 space-x-6'>     
                             <Link to="/dashboard" className=" hover:text-gray-300">
                                 Dashboard
                             </Link>

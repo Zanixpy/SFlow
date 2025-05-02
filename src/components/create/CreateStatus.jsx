@@ -19,11 +19,9 @@ export function CreateStatus({id, Onclose}) {
         e.stopPropagation()
         const idStat = selectedProject.status.id
         const id = e.currentTarget.id
-        console.log(id)
         if (id!==idStat) {
             const findStatut = status.find(item => item.id === id)
             editValue(selectedProject,"status",findStatut)
-            console.log("C'est Valid")
         } 
         Onclose()
     }

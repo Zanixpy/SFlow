@@ -8,9 +8,10 @@ import { Box } from "../ui/Box.jsx";
 export function CreateCategorie({ id, OnClose,  }) {
 
   // State Management
-  const DisplayProject = useUserStore((state) => state.projects)
-  const UpdateProject = useUserStore((state) => state.UpdateProjectBudget)
-  const ProjectTarget = DisplayProject[id]
+  const allProjects = useUserStore((state) => state.projects)
+  const updateProject = useUserStore((state) => state.updateProjectBudget)
+  const addCategorie = useUserStore((state)=> state.addCategorie)
+  const selectedProject = allProjects[id]
 
   // Main variables, colors, categorie content and errors
   const [colorVal, setcolorVal] = useState({
@@ -27,70 +28,65 @@ export function CreateCategorie({ id, OnClose,  }) {
     unavailable: [],
   })
 
-  const [Categorie, setCategorie] = useState({
-    ID: crypto.randomUUID(),
-    ProjetLink: "",
-    Nom: "",
-    BudgetTotal: "",
-    BudgetRestant: 0,
-    Color: "",
-    Task: [],
+  const [categorie, setCategorie] = useState({
+    id: crypto.randomUUID(),
+    name: "",
+    totalBudget: "",
+    color: "",
+    task: [],
   })
 
   const [errors, setErrors] = useState({
-    Nom: "",
-    BudgetTotal: "",
-    Color: "",
-    CreateMax:"",
+    name: "",
+    totalBudget: "",
+    color: "",
+    maxCategories:"",
   })
 
   // Function to check errors for categories inputs
-  const ValidateCategorie = (data) => {
+  const validateCategorie = (data) => {
     const newErrors = {
-      Nom: "",
-      BudgetTotal: "",
-      Color: "",
-      CreateMax:"",
+      name: "",
+      totalBudget: "",
+      color: "",
+      maxCategories:"",
 
     };
 
-    const TestColorAvailable = ProjectTarget.Categories && ProjectTarget.Categories.some(item => item.Color === data.Color )
-    const TestNameAvailable = ProjectTarget.Categories && ProjectTarget.Categories.some(item=> item.Nom === data.Nom)
+    const testColorAvailable = selectedProject.categories && selectedProject.categories.some(item => item.color === data.color )
+    const testNameAvailable = selectedProject.categories && selectedProject.categories.some(item=> item.name === data.name)
 
     //Verifier le nom de la catégorie//
-    if (!data.Nom) {
-      newErrors.Nom = "Category's name is required";
-    } else if (data.Nom.length > 25) {
-      newErrors.Nom = "Category's name must be less than 25 characters";
-    } else if (TestNameAvailable) {
-      newErrors.Nom = "This name already exist";
+    if (!data.name) {
+      newErrors.name = "The name is required";
+    } else if (data.name.length > 25) {
+      newErrors.name = "The name must be less than 25 characters";
+    } else if (testNameAvailable) {
+      newErrors.name = "The name already exist";
+    } else if (selectedProject.name===data.name){
+      newErrors.name = "You can't use the name of project";
     }
 
     //Verifier le Budget de la categorie//
-    if (!data.BudgetTotal) {
-      newErrors.BudgetTotal = "Category's sub-budget is required";
+    if (!data.totalBudget) {
+      newErrors.totalBudget = "The sub-budget is required";
+    } else if (data.totalBudget[0] === "0" ) {
+      newErrors.totalBudget = "Please enter a valid sub-budget"
     } else if (
-      data.BudgetTotal[0] === "0" ||
-      parseInt(data.BudgetTotal) < 0 ||
-      data.BudgetTotal.includes("e")
+      parseInt(data.totalBudget) > parseInt(selectedProject.remainingBudget)
     ) {
-      newErrors.BudgetTotal = "Please enter a valid sub-budget"
-    } else if (
-      parseInt(data.BudgetTotal) > parseInt(ProjectTarget.BudgetTotal)
-    ) {
-      newErrors.BudgetTotal =
-        "The allocated sub-budget cannot exceed the project budget."
+      newErrors.totalBudget = "The allocated sub-budget cannot exceed the project budget."
     }
 
-    if (!colorVal.availble.some(item=>item.color === data.Color)) {
-      newErrors.Color = "Select a color that is acceptable"
-    } else if (TestColorAvailable){
-      newErrors.Color = "This color is already taken"
+    if (!colorVal.availble.some(item=>item.color === data.color)) {
+      newErrors.color = "Select a color that is acceptable"
+    } else if (testColorAvailable){
+      newErrors.color = "This color is already taken"
     }
 
 
-    if (ProjectTarget.Categories.length===8) {
-      newErrors.CreateMax = "You have reached the maximum number of categories"
+    if (selectedProject.categories.length===8) {
+      newErrors.maxCategories = "You have reached the maximum number of categories"
     }
 
     return newErrors;
@@ -104,98 +100,126 @@ export function CreateCategorie({ id, OnClose,  }) {
 
   // Handle the submit of "categorie form"
   const handleSubmit = async (e) => {
+
     e.preventDefault()
-    const newErrors = ValidateCategorie(Categorie)
+    const newErrors = validateCategorie(categorie)
+
     setErrors(newErrors)
-    const hasErrors = Object.values(newErrors).some((error) => error !== "");
+    const hasErrors = Object.values(newErrors).some((error) => error !== "")
+
     if (hasErrors === false) {
       await new Promise((resolve) => setTimeout(resolve, 300))
-      Categorie.ProjetLink = ProjectTarget.ID
-      ProjectTarget.Categories.push(Categorie)
+      
+      addCategorie(selectedProject,categorie)
       OnClose()
-      UpdateProject(ProjectTarget)
+      updateProject(selectedProject)
     }
     
   }
 
   // data for inputs
-  const CategorieField = [
+  const dataInputs = [
     {
-      labelName: "Nom",
-      forHtml: "nom",
+      labelName: "Name",
+      forHtml: "name",
       type: "text",
-      id: `nom`,
-      field: "Nom",
-      placeholder: "Enter category's name",
+      id: "name",
+      field: "name",
+      placeholder: "Enter the name",
     },
     {
       labelName: "Budget",
-      forHtml: "budget-total",
+      forHtml: "totalBudget",
       type: "number",
-      id: `budget`,
-      field: "BudgetTotal",
-      placeholder: "Enter sub-budget's name",
+      id: "totalBudget",
+      field: "totalBudget",
+      placeholder: "Enter the sub-budget",
     },
     {
       labelName: "Color",
-      forHtml: "categorie-color",
+      forHtml: "color",
       type: "select",
       Contenu: colorVal.availble,
-      id: `color`,
-      field: "Color",
-      placeholder: "Enter category's color",
+      id: "color",
+      field: "color",
+      placeholder: "Enter the color",
     },
     {
       labelName:"Create",
       type:"submit",
       id:"create",
-      field:"CreateMax"
+      field:"maxCategories"
     }
   ]
 
   // Return JSX
   return (
-    <Box w={"100"} className="bg-white">
+    <Box w={"100"} h={"80"} className="bg-white">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
         <DeleteButton OnClick={OnClose} />
       </div>
       <div>
-        {CategorieField.map((item) => (
-          <div key={item.id}>
-            {item.type === "text" || item.type === "number" ? (
-              <div className="mb-1 max-w-100 p-2">
-                <label className="mr-5" htmlFor={item.forHtml}>
-                  {item.labelName} :
-                </label>
-                <input
-                  type={item.type}
-                  id={item.forHtml}
-                  value={Categorie[item.field]}
-                  onChange={(e) => handleChange(e, item.field)}
-                  placeholder={item.placeholder}
-                />
-              </div>
-            ) : item.type === "select" ? (
-              <div className="mb-1 max-w-100 p-2">
-                <label className="mr-5" htmlFor={item.forHtml}>
-                  {item.labelName} :
-                </label>
-                <select
-                  name={item.field}
-                  id={item.forHtml}
-                  value={Categorie[item.field]}
-                  onChange={(e) => handleChange(e, item.field)}
-                >
-                  <option value="None">Choose a color</option>
-                  {item.Contenu.map((color) => (
-                    <option value={color.color} key={color.idColor}>
-                      {color.color}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ) : (
+        {dataInputs.map((item) => (
+          <div className="mb-1 max-w-100 p-2" key={item.id}>
+              {item.type === "text" ? (<>
+
+                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <input
+                      type={item.type}
+                      id={item.forHtml}
+                      value={categorie[item.field]}
+                      onKeyDown={(e)=> {
+                        const isValid = /^[a-zA-Z0-9 ]$/.test(e.key)
+                        const controlKeys = [
+                            'Backspace',
+                            'Delete',
+                            'ArrowLeft',
+                            'ArrowRight',
+                            'Tab'
+                          ]
+                        if (!isValid && !controlKeys.includes(e.key)) {
+                            e.preventDefault()
+                        }
+                      }}
+                      onChange={(e) => handleChange(e, item.field)}
+                      placeholder={item.placeholder}
+                    />  
+
+              </>
+           
+            ) : item.type==="number"? (<>
+
+                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <input
+                      type={item.type}
+                      id={item.forHtml}
+                      value={categorie[item.field]}
+                      onKeyDown={(e)=> {
+                        if (e.key==='e'|| e.key==='E' || e.key==='+' || e.key==='-') {
+                            e.preventDefault()
+                        }
+                      }}
+                      onChange={(e) => handleChange(e, item.field)}
+                      placeholder={item.placeholder}
+                    />  
+            </>) : item.type === "select" ? (<>
+                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <select
+                      name={item.field}
+                      id={item.forHtml}
+                      value={categorie[item.field]}
+                      onChange={(e) => handleChange(e, item.field)}
+                    >
+                      <option value="None">Choose a color</option>
+                      {item.Contenu.map((color) => (
+                        <option value={color.color} key={color.idColor}>
+                          {color.color}
+                        </option>
+                      ))}
+                    </select>
+
+            </>) : (
               <div className="mt-7 text-right max-w-100">
                 <CreateButton OnClick={handleSubmit} Value={item.labelName} />
               </div>
