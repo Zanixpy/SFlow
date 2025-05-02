@@ -3,9 +3,9 @@ import { create } from 'zustand'
 
 export const useUserStore = create((set) => ({
     projects: [], 
-    RemoveProject:(project) => set((state) => ({ projects: state.projects.filter((item)=>item.Nom!==project.Nom)})),
+    removeProject:(project) => set((state) => ({ projects: state.projects.filter((item)=>item.Nom!==project.Nom)})),
     addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
-    UpdateProjectBudget: (project) => set((state) => {
+    updateProjectBudget: (project) => set((state) => {
       const projectIndex = state.projects.findIndex(p => p.ID === project.ID);
       if (projectIndex === -1) return state
       
@@ -15,8 +15,9 @@ export const useUserStore = create((set) => ({
       
       return { projects: updatedProjects }
     }),
-    EditProjectValue: (project,attribut,value) => set((state)=>{
-      const projectIndex = state.projects.findIndex(p => p.ID === project.ID);
+    editValue: (project,attribut,value) => set((state)=>{
+      console.log(project)
+      const projectIndex = state.projects.findIndex(p => p.id === project.id);
       if (projectIndex === -1) return state
       const updatedProjects = [...state.projects]
 

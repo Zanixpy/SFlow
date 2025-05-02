@@ -19,8 +19,11 @@ export function CreateProject({OnClose}) {
         categories:[],
         categoriesBudget:"",
         task:[],
-        status:""
-
+        status:{
+            id:"1TD",
+            activity:"To do", 
+            color:"bg-black",
+        }
     })
    
     const [errors, setErrors]= useState({
@@ -48,7 +51,7 @@ export function CreateProject({OnClose}) {
         
         if (!data.totalBudget) {
             newErrors.totalBudget="The budget is required"
-        }else if (data.totalBudget[0]==="0" || parseInt(data.totalBudget<0)){
+        }else if (data.totalBudget[0]==="0" || data.totalBudget[0]==="-" ){
             newErrors.totalBudget="Please enter a valid budget"
         }
     
