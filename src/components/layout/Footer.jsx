@@ -1,4 +1,3 @@
-import { Box } from "../ui/Box"
 import SLogo from '../../assets/S_logo.png'
 
 export function Footer() {

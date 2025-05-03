@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { useUserStore } from "../../store/useUserStore.js"
+import { useUserStore } from "../../../store/useUserStore.js"
 
 
 export function CreateStatus({id, Onclose}) {

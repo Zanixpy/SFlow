@@ -1,4 +1,4 @@
-import { ProjectsList } from "../components/project/ProjectList"
+import { ProjectsList } from "../components/project/display/ProjectsList"
 
 
 export function Projects() {

@@ -1,8 +1,8 @@
-import { useEffect, useId, useState } from "react";
-import { useUserStore } from "../../store/useUserStore.js";
-import { CreateButton } from "../ui/CreateButton.jsx";
-import { DeleteButton } from "../ui/DeleteButton.jsx";
-import { Box } from "../ui/Box.jsx";
+import { useState } from "react";
+import { useUserStore } from "../../../store/useUserStore.js";
+import { CreateBtn } from "../../ui/button/CreateBtn.jsx";
+import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx";
+import { Box } from "../../ui/container/Box.jsx";
 
 
 export function CreateCategorie({ id, OnClose,  }) {
@@ -70,7 +70,7 @@ export function CreateCategorie({ id, OnClose,  }) {
     //Verifier le Budget de la categorie//
     if (!data.totalBudget) {
       newErrors.totalBudget = "The sub-budget is required";
-    } else if (data.totalBudget[0] === "0" ) {
+    } else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 ) {
       newErrors.totalBudget = "Please enter a valid sub-budget"
     } else if (
       parseInt(data.totalBudget) > parseInt(selectedProject.remainingBudget)
@@ -157,7 +157,7 @@ export function CreateCategorie({ id, OnClose,  }) {
     <Box w={"100"} h={"80"} className="bg-white">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
-        <DeleteButton OnClick={OnClose} />
+        <DeleteBtn OnClick={OnClose} />
       </div>
       <div>
         {dataInputs.map((item) => (
@@ -221,7 +221,7 @@ export function CreateCategorie({ id, OnClose,  }) {
 
             </>) : (
               <div className="mt-7 text-right max-w-100">
-                <CreateButton OnClick={handleSubmit} Value={item.labelName} />
+                <CreateBtn OnClick={handleSubmit} Value={item.labelName} />
               </div>
             )}
             {errors[item.field] && (

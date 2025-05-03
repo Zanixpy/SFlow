@@ -1,8 +1,8 @@
 import { useEffect, useId, useState } from "react"
-import { useUserStore } from "../../store/useUserStore.js";
-import { CreateButton } from "../ui/CreateButton.jsx";
-import { DeleteButton } from "../ui/DeleteButton.jsx";
-import { Box } from "../ui/Box.jsx";
+import { useUserStore } from "../../../store/useUserStore.js";
+import { Box } from "../../ui/container/Box.jsx";
+import { CreateBtn } from "../../ui/button/CreateBtn.jsx";
+import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx";
 
 export function CreateProject({OnClose}) {
     // State management
@@ -51,7 +51,7 @@ export function CreateProject({OnClose}) {
         
         if (!data.totalBudget) {
             newErrors.totalBudget="The budget is required"
-        }else if (data.totalBudget[0]==="0" || data.totalBudget[0]==="-" ){
+        }else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1){
             newErrors.totalBudget="Please enter a valid budget"
         }
     
@@ -106,7 +106,7 @@ export function CreateProject({OnClose}) {
              <Box w={"100"} h={"75"} className="bg-white">
                     <div className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
-                        <DeleteButton OnClick={()=>OnClose()}/>
+                        <DeleteBtn OnClick={()=>OnClose()}/>
                         </div>
                             {dataInputs.map(item =>(
                                 <div className="my-5 max-w-100 p-2 " key={item.id}>
@@ -158,7 +158,7 @@ export function CreateProject({OnClose}) {
                         </div>
                             ))}
                         <div className="mt-7 text-right max-w-100">
-                            <CreateButton OnClick={handleSubmit} Value={"Create"} />
+                            <CreateBtn OnClick={handleSubmit} Value={"Create"} />
                         </div>  
             </Box>
     )

@@ -1,9 +1,9 @@
-import { useUserStore } from "../../store/useUserStore.js"
+import { useUserStore } from "../../../store/useUserStore.js"
 import { useState } from "react"
 import { CreateProject } from "../create/CreateProject.jsx"
 import { useNavigate } from "react-router-dom"
-import { CreateButton } from "../ui/CreateButton.jsx"
-import { Box } from "../ui/Box.jsx"
+import { CreateBtn } from "../../ui/button/CreateBtn.jsx"
+import { Box } from "../../ui/container/Box.jsx"
 import { CreateStatus } from "../create/CreateStatus.jsx"
 
 export function ProjectsList() {
@@ -19,7 +19,7 @@ export function ProjectsList() {
         <Box  w={"350"} h={"200"} className="bg-white">
                 <div className="flex items-center">
                     <h1 className="mr-5 text-[25px] font-bold">Projects</h1>
-                    <CreateButton OnClick={() => setShowCreateProject(true)} Value={"+"}  />
+                    <CreateBtn OnClick={() => setShowCreateProject(true)} Value={"+"}  />
                 </div>
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
                 <ul className="block m-4 p-4">

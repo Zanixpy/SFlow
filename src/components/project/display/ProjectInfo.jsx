@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import { useUserStore } from "../../store/useUserStore.js"
-import { DeleteButton } from "../ui/DeleteButton.jsx"
-import { CircleBox } from "../ui/CircleBox.jsx"
-import { useEffect, useState } from "react"
-import { CreateButton } from "../ui/CreateButton.jsx"
-import { CreateCategorie } from "./CreateCategorie.jsx"
-import { CategoryList } from "../category/CategoryList.jsx"
+import { useUserStore } from "../../../store/useUserStore.js"
+import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx"
+import { CircleBox } from "../../ui/container/CircleBox.jsx"
+import { CategoriesList } from "../../category/display/categoriesList.jsx"
 
-export function CreateProjectDetails({id}) {
+export function ProjectInfo({id}) {
 
     // State Management
     const allProjects = useUserStore(state=>state.projects)
@@ -15,7 +12,6 @@ export function CreateProjectDetails({id}) {
     const selectedProject = allProjects[id]
 
     // Variable
-    const [showCreateCategorie, setShowCreateCategorie] = useState(false)
     const navigate= useNavigate()
 
     // Function on delete
@@ -32,7 +28,7 @@ export function CreateProjectDetails({id}) {
                 <div className="mx-10 my-20 p-4">
                     <div className="flex items-center justify-between ">
                         <h1 className="text-[40px] font-bold ">{selectedProject?.name}</h1>
-                        <DeleteButton OnClick={OnDelete}/>  
+                        <DeleteBtn OnClick={OnDelete}/>  
                     </div>
                     <CircleBox padding="p-6" w={"120"} h={"120"} className="mx-auto my-10 py-20 bg-gray-50"> 
                         <div className="ml-4 items-center">
@@ -46,10 +42,8 @@ export function CreateProjectDetails({id}) {
                                         <p>Spent Budget : {selectedProject?.spentBudget}€ </p>       
                                 </div>
                         </div>
-                        <CreateButton OnClick={()=>setShowCreateCategorie(true)} Value={"+"} />
                     </CircleBox>
-                    {showCreateCategorie && <CreateCategorie id={id} OnClose={()=>setShowCreateCategorie(false)}/>}
-                    {selectedProject?.categories && <CategoryList id={id}/> }
+                    {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/> }
                 </div>
 
     )

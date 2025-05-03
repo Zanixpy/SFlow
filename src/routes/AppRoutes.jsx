@@ -1,5 +1,5 @@
 import { Dashboard } from '../pages/Dashboard.jsx'
-import { Projects} from '../pages/Projects.jsx'
+import { Projects } from '../pages/Projects.jsx'
 import { ProjectDetails } from '../pages/ProjectDetails.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Header } from "../components/layout/Header.jsx"
