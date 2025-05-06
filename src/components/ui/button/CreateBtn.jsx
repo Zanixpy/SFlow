@@ -1,6 +1,6 @@
-export function CreateBtn({OnClick,Value}) {
+export function CreateBtn({OnClick,Value,className}) {
 
-    return <input className=" border-1 border-gray-300 px-4 py-2 rounded-sm hover:bg-gray-100 hover:font-bold transition-colors  cursor-pointer" type="button" value={Value} onClick={OnClick} />
+    return <input className={`${className} transition-colors cursor-pointer`} type="button" value={Value} onClick={OnClick} />
     
     
 }

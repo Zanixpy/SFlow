@@ -70,7 +70,7 @@ export function CreateCategorie({ id, OnClose,  }) {
     //Verifier le Budget de la categorie//
     if (!data.totalBudget) {
       newErrors.totalBudget = "The sub-budget is required";
-    } else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 ) {
+    } else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 || data.totalBudget.includes('-')) {
       newErrors.totalBudget = "Please enter a valid sub-budget"
     } else if (
       parseInt(data.totalBudget) > parseInt(selectedProject.remainingBudget)
@@ -120,20 +120,20 @@ export function CreateCategorie({ id, OnClose,  }) {
   // data for inputs
   const dataInputs = [
     {
-      labelName: "Name",
+      labelName: "Title of categorie",
       forHtml: "name",
       type: "text",
       id: "name",
       field: "name",
-      placeholder: "Enter the name",
+      placeholder: "Ex : Transports",
     },
     {
-      labelName: "Budget",
+      labelName: "Sub-budget (€)",
       forHtml: "totalBudget",
       type: "number",
       id: "totalBudget",
       field: "totalBudget",
-      placeholder: "Enter the sub-budget",
+      placeholder: "Ex : 4000",
     },
     {
       labelName: "Color",
@@ -142,7 +142,7 @@ export function CreateCategorie({ id, OnClose,  }) {
       Contenu: colorVal.availble,
       id: "color",
       field: "color",
-      placeholder: "Enter the color",
+      placeholder: "Pick a color",
     },
     {
       labelName:"Create",
@@ -154,44 +154,46 @@ export function CreateCategorie({ id, OnClose,  }) {
 
   // Return JSX
   return (
-    <Box w={"100"} h={"80"} className="bg-white">
+    <Box w={"100"} h={"100"} className="border text-black border-gray-200 rounded-lg shadow-sm">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
         <DeleteBtn OnClick={OnClose} />
       </div>
       <div>
         {dataInputs.map((item) => (
-          <div className="mb-1 max-w-100 p-2" key={item.id}>
+          <div className="my-2 p-2" key={item.id}>
               {item.type === "text" ? (<>
 
-                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <label className="block mb-2 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName}</label>
                     <input
-                      type={item.type}
-                      id={item.forHtml}
-                      value={categorie[item.field]}
-                      onKeyDown={(e)=> {
-                        const isValid = /^[a-zA-Z0-9 ]$/.test(e.key)
-                        const controlKeys = [
-                            'Backspace',
-                            'Delete',
-                            'ArrowLeft',
-                            'ArrowRight',
-                            'Tab'
-                          ]
-                        if (!isValid && !controlKeys.includes(e.key)) {
-                            e.preventDefault()
-                        }
-                      }}
-                      onChange={(e) => handleChange(e, item.field)}
-                      placeholder={item.placeholder}
+                        className="border p-1 border-gray-200 rounded-lg w-80 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]"
+                        type={item.type}
+                        id={item.forHtml}
+                        value={categorie[item.field]}
+                        onKeyDown={(e)=> {
+                          const isValid = /^[a-zA-Z0-9 ]$/.test(e.key)
+                          const controlKeys = [
+                              'Backspace',
+                              'Delete',
+                              'ArrowLeft',
+                              'ArrowRight',
+                              'Tab'
+                            ]
+                          if (!isValid && !controlKeys.includes(e.key)) {
+                              e.preventDefault()
+                          }
+                        }}
+                        onChange={(e) => handleChange(e, item.field)}
+                        placeholder={item.placeholder}
                     />  
 
               </>
            
             ) : item.type==="number"? (<>
 
-                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <label className="block mb-2 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName}</label>
                     <input
+                      className="border p-1 border-gray-200 rounded-lg w-80 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]"
                       type={item.type}
                       id={item.forHtml}
                       value={categorie[item.field]}
@@ -204,8 +206,9 @@ export function CreateCategorie({ id, OnClose,  }) {
                       placeholder={item.placeholder}
                     />  
             </>) : item.type === "select" ? (<>
-                    <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                    <label className="mr-5 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName} :</label>
                     <select
+                      className='border p-1 border-gray-200 rounded-lg w-50 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]'
                       name={item.field}
                       id={item.forHtml}
                       value={categorie[item.field]}
@@ -220,12 +223,12 @@ export function CreateCategorie({ id, OnClose,  }) {
                     </select>
 
             </>) : (
-              <div className="mt-7 text-right max-w-100">
-                <CreateBtn OnClick={handleSubmit} Value={item.labelName} />
+              <div className="mt-2 text-right max-w-100">
+                <CreateBtn OnClick={handleSubmit} Value={item.labelName} className={'px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] rounded-lg text-white font-bold'} />
               </div>
             )}
             {errors[item.field] && (
-              <span className="block mt-1 text-red-400">
+              <span className="block text-[12px] mt-1 text-red-400">
                 {errors[item.field]}
               </span>
             )}

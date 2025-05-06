@@ -13,23 +13,24 @@ export function ProjectsList() {
     const [activeStatusIndex, setActiveStatusIndex] = useState(null)
 
     const navigate= useNavigate()
+    
 
 
     return (
-        <Box  w={"350"} h={"200"} className="bg-white">
+        <Box  w={"350"} h={"200"} className="text-black">
                 <div className="flex items-center">
                     <h1 className="mr-5 text-[25px] font-bold">Projects</h1>
-                    <CreateBtn OnClick={() => setShowCreateProject(true)} Value={"+"}  />
+                    <CreateBtn OnClick={() => setShowCreateProject(true)} Value={"+"} className={'text-[20px] border rounded-full px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] text-white font-bold'}  />
                 </div>
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
                 <ul className="block m-4 p-4">
                 {allProjects && allProjects.map((item,index)=>
-                    <li key={item.id} onClick={()=>navigate(`/projects/${index}`)} className="flex justify-between items-center py-4 pr-4 my-4 max-h-20 max-w-8xl rounded border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer">
-                        <div className={`${item.status?.color} h-20 w-5 mr-5 rounded-xs `}></div>
-                        <p className="flex-1">{item.name}</p>
-                        <p className="flex-1">{item.totalBudget}€</p>
+                    <li key={item.id} onClick={()=>navigate(`/projects/${index}`)} className="p-5 m-4 w-80 h-60 rounded-lg border border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer">
+                        <p className="text-[25px] font-bold mb-4">{item.name}</p>
+                        <p className="">{item.spentBudget} € / {item.totalBudget} €</p>
+                        <p></p>
                         <input 
-                            className="ml-auto px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer" 
+                            className={`ml-auto px-5 py-2 rounded ${item.status?.color} text-white cursor-pointer`} 
                             type="button" 
                             value={item.status?.activity}
                             id={item.status?.id}

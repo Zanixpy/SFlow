@@ -22,7 +22,7 @@ export function CreateProject({OnClose}) {
         status:{
             id:"1TD",
             activity:"To do", 
-            color:"bg-black",
+            color:"bg-gray-400",
         }
     })
    
@@ -51,7 +51,7 @@ export function CreateProject({OnClose}) {
         
         if (!data.totalBudget) {
             newErrors.totalBudget="The budget is required"
-        }else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1){
+        }else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 || data.totalBudget.includes('-')){
             newErrors.totalBudget="Please enter a valid budget"
         }
     
@@ -83,37 +83,38 @@ export function CreateProject({OnClose}) {
     // data for inputs
     const dataInputs=[
         {
-            labelName:"Name",
+            labelName:"Title of project",
             forHtml:"name",
             type:"text",
             id:`name`,
             field:"name",
-            placeholder:"Enter the name of project"
+            placeholder:"Ex : Build an house"
         },
         {
-            labelName:"Budget",
+            labelName:"Global budget (€)",
             forHtml:"totalBudget",
             type:"number",
             id:`totalBudget`,
             field:"totalBudget",
-            placeholder:"Enter the budget of project"
+            placeholder:"Ex : 10000"
         }
     ]
 
 
     // Return JSX
     return (
-             <Box w={"100"} h={"75"} className="bg-white">
+             <Box w={"100"} h={"80"} className="border text-black border-gray-200 rounded-lg shadow-sm">
                     <div className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
                         <DeleteBtn OnClick={()=>OnClose()}/>
                         </div>
                             {dataInputs.map(item =>(
-                                <div className="my-5 max-w-100 p-2 " key={item.id}>
+                                <div className="my-2 p-2" key={item.id}>
                                     {item.type==="number"? (<>
                                         
-                                            <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                                            <label className="block mb-2 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName}</label>
                                             <input 
+                                                className="border p-1 border-gray-200 rounded-lg w-80 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]"
                                                 type={item.type}
                                                 id={item.forHtml}
                                                 value={project[item.field]}
@@ -128,8 +129,9 @@ export function CreateProject({OnClose}) {
 
                                     </>):(<>
 
-                                        <label className="mr-5" htmlFor={item.forHtml}>{item.labelName} :</label>
+                                        <label className="block mb-1 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName} </label>
                                             <input 
+                                                className="border p-1 border-gray-200 rounded-lg w-80 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]"
                                                 type={item.type}
                                                 id={item.forHtml}
                                                 value={project[item.field]}
@@ -153,12 +155,12 @@ export function CreateProject({OnClose}) {
                                     </>)}
 
                                     {errors[item.field] && (
-                                        <span className="block text-sm mt-1 text-red-400 ">{errors[item.field]}</span>
+                                        <span className="block text-[12px] mt-1 text-red-400 ">{errors[item.field]}</span>
                                     )}
                         </div>
                             ))}
                         <div className="mt-7 text-right max-w-100">
-                            <CreateBtn OnClick={handleSubmit} Value={"Create"} />
+                            <CreateBtn OnClick={handleSubmit} Value={"Create"} className={'px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] rounded-lg text-white font-bold'} />
                         </div>  
             </Box>
     )

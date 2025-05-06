@@ -15,6 +15,7 @@ export default {
     'bg-yellow-300',
     'bg-purple-300',
     'bg-gray-300',
+    'bg-gray-400',
     'bg-orange-300',
     'bg-pink-300',
     'bg-green-400',
@@ -29,6 +30,18 @@ export default {
     "w-340",
     'w-80',
     'w-60',
+    'w-300',
+    'max-w-100',
+    'max-w-50',
+    'max-w-70',
+    'max-w-full',
+    'max-w-120',
+    "max-w-350",
+    "max-w-340",
+    'max-w-80',
+    'max-w-60',
+    'max-w-300',
+    
 
 
     'h-100',
@@ -37,7 +50,15 @@ export default {
     'h-75',
     'h-120',
     'h-80',
-    "h-200"
+    "h-200",
+    'max-h-100',
+    'max-h-60',
+    'max-h-full',
+    'max-h-75',
+    'max-h-120',
+    'max-h-80',
+    "max-h-200",
+    
     
   ],
 } 
