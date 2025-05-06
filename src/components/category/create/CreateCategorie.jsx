@@ -139,10 +139,9 @@ export function CreateCategorie({ id, OnClose,  }) {
       labelName: "Color",
       forHtml: "color",
       type: "select",
-      Contenu: colorVal.availble,
+      contenu: colorVal.availble,
       id: "color",
       field: "color",
-      placeholder: "Pick a color",
     },
     {
       labelName:"Create",
@@ -157,7 +156,7 @@ export function CreateCategorie({ id, OnClose,  }) {
     <Box w={"100"} h={"100"} className="border text-black border-gray-200 rounded-lg shadow-sm">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
-        <DeleteBtn OnClick={OnClose} />
+        <DeleteBtn OnClick={OnClose} value="X" className={'ml-auto text-gray-600 hover:text-gray-800'} />
       </div>
       <div>
         {dataInputs.map((item) => (
@@ -215,7 +214,7 @@ export function CreateCategorie({ id, OnClose,  }) {
                       onChange={(e) => handleChange(e, item.field)}
                     >
                       <option value="None">Choose a color</option>
-                      {item.Contenu.map((color) => (
+                      {item.contenu.map((color) => (
                         <option value={color.color} key={color.idColor}>
                           {color.color}
                         </option>

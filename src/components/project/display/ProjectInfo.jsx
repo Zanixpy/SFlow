@@ -4,6 +4,7 @@ import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx"
 import { CircleBox } from "../../ui/container/CircleBox.jsx"
 import { CategoriesList } from "../../category/display/categoriesList.jsx"
 import { Box } from "../../ui/container/Box.jsx"
+import { TasksList } from "../../task/display/TasksList.jsx"
 
 export function ProjectInfo({id}) {
 
@@ -25,10 +26,13 @@ export function ProjectInfo({id}) {
     // Effect pour surveiller les changements de catégories
 
     // Return JSX
-    return ( <Box h={'300'} w={'350'} margin="mx-10" className="my-25 border border-gray-100 shadow-sm" >
+    return ( <Box h={'300'} w={'320'} margin="m-25" padding="p-5" className="text-black">
+                    <div className="mb-4 text-black opacity-80 hover:opacity-100 cursor-pointer w-55 transitions-colors" onClick={()=>navigate("/projects")}>
+                        <p>{'<'}- Retour au tableau de bord</p>
+                    </div>
                     <div className="flex items-center justify-between ">
                         <h1 className="text-[40px] font-bold ">{selectedProject?.name}</h1>
-                        <DeleteBtn OnClick={OnDelete}/>  
+                        <DeleteBtn OnClick={OnDelete} value="Delete" className={"px-4 py-1 rounded-lg border-gray-300 text-red-600 hover:bg-red-50 border"}/>  
                     </div>
                     <CircleBox  w={"100"} h={"100"} className="mx-[35%] my-10 py-30 bg-gray-50"> 
                         <div className="">
@@ -43,7 +47,8 @@ export function ProjectInfo({id}) {
                                 </div>
                         </div>
                     </CircleBox>
-                    {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/> }
+                    {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/>}
+                    <TasksList id={id} />
             </Box>
     )
 }

@@ -18,7 +18,7 @@ export function CreateProject({OnClose}) {
         remainingBudget:"",
         spentBudget:"0",
         categories:[],
-        task:[],
+        tasks:[],
         status:{
             id:"1TD",
             activity:"To do", 
@@ -106,7 +106,7 @@ export function CreateProject({OnClose}) {
              <Box w={"100"} h={"80"} className="border text-black border-gray-200 rounded-lg shadow-sm">
                     <div className="flex items-center max-w-100">
                         <h1 className="text-lg font-bold mr-5">New project</h1>
-                        <DeleteBtn OnClick={()=>OnClose()}/>
+                        <DeleteBtn OnClick={()=>OnClose()} value="X" className={'ml-auto opacity-50 hover:opacity-100'}/>
                         </div>
                             {dataInputs.map(item =>(
                                 <div className="my-2 p-2" key={item.id}>

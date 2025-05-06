@@ -15,7 +15,7 @@ export function CategoriesList({id}) {
     return ( <Box w={"340"} h={"150"} >
                 <div className="flex items-center">
                     <h1 className="mr-5 text-[25px] font-bold">Categories</h1>
-                    <CreateBtn OnClick={()=>setShowCreateCategorie(true)} Value={"+"} />
+                    <CreateBtn OnClick={()=>setShowCreateCategorie(true)} Value={"+"} className={'text-[20px] border rounded-full px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] text-white font-bold'} />
                 </div>  
             <div className="flex items-center">
             {selectedProject.categories && selectedProject.categories.map(item=>

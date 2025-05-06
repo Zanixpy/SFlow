@@ -31,7 +31,10 @@ export default {
     'w-80',
     'w-60',
     'w-300',
+    'w-380',
+
     'max-w-100',
+    'max-w-120',
     'max-w-50',
     'max-w-70',
     'max-w-full',
@@ -52,12 +55,14 @@ export default {
     'h-80',
     "h-200",
     'max-h-100',
+    'max-h-130',
     'max-h-60',
     'max-h-full',
     'max-h-75',
     'max-h-120',
     'max-h-80',
     "max-h-200",
+    
     
     
   ],
