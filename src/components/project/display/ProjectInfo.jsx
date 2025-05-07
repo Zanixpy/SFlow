@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useUserStore } from "../../../store/useUserStore.js"
 import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx"
-import { CircleBox } from "../../ui/container/CircleBox.jsx"
 import { CategoriesList } from "../../category/display/categoriesList.jsx"
 import { Box } from "../../ui/container/Box.jsx"
 import { TasksList } from "../../task/display/TasksList.jsx"
@@ -26,27 +25,42 @@ export function ProjectInfo({id}) {
     // Effect pour surveiller les changements de catégories
 
     // Return JSX
-    return ( <Box h={'300'} w={'320'} margin="m-25" padding="p-5" className="text-black">
-                    <div className="mb-4 text-black opacity-80 hover:opacity-100 cursor-pointer w-55 transitions-colors" onClick={()=>navigate("/projects")}>
-                        <p>{'<'}- Retour au tableau de bord</p>
+    
+    return ( <Box w={"330"} h={"200"} padding="p-4" margin="mx-30 mt-4 mb-10" className="text-black">
+                    <div className="mb-4 text-gray-500 text-[14px]  hover:text-gray-700 cursor-pointer w-55 transitions-colors" onClick={()=>navigate("/projects")}>
+                        <p><span className="text-[17px]">{'<'}-</span> Retour au tableau de bord</p>
                     </div>
                     <div className="flex items-center justify-between ">
                         <h1 className="text-[40px] font-bold ">{selectedProject?.name}</h1>
                         <DeleteBtn OnClick={OnDelete} value="Delete" className={"px-4 py-1 rounded-lg border-gray-300 text-red-600 hover:bg-red-50 border"}/>  
                     </div>
-                    <CircleBox  w={"100"} h={"100"} className="mx-[35%] my-10 py-30 bg-gray-50"> 
-                        <div className="">
-                                <div className="text-center mb-10 ">
-                                    <p className="mb-2 text-[20px]" >Overall budget :</p>
-                                    <p className="text-[40px] mb-5 font-bold">{selectedProject?.totalBudget}€</p>
+                    <Box  w={"200"} h={"60"} margin="my-4" padding="p-5" className="border-1 border-gray-200 shadow-sm rounded-lg">
+                            <div className="flex mb-2 text-[20px] font-bold"> 
+                                <p className="flex-1 w-30">Overview</p>
+                                <div className="flex-1">
+                                        <p>Budget utilization</p>
+                                        <p className="inline text-[15px] font-normal">{selectedProject.spentBudget} € / {selectedProject.totalBudget} €</p>
+                                        <div className="max-w-150 bg-[#68D391] border border-gray-200 py-1 rounded-lg"></div>
+
                                 </div>
-                                <div className="flex items-center text-[15px] ml-2">
-                                        <p>Remaining Budget : <span className="font-bold">{selectedProject?.remainingBudget}€</span></p>
-                                        <p className="text-[20px] mx-3"> | </p>
-                                        <p>Spent Budget : <span className="font-bold">{selectedProject?.spentBudget}€</span> </p>       
+                            </div>
+                            <div className="flex justify-between max-w-100 items-center mb-8 text-[15px] text-gray-500">
+                                <div>
+                                    <p className="text-[14px]">Global budget</p>
+                                    <p className="text-black font-bold text-[18px]">{selectedProject.totalBudget} €</p>
                                 </div>
-                        </div>
-                    </CircleBox>
+                                <div>
+                                    <p className="text-[14px]">Current expenses</p>
+                                    <p className="text-black font-bold text-[18px]">{selectedProject.spentBudget} €</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-between max-w-100 items-center text-[15px] text-gray-500">
+                                <div>
+                                    <p className="text-[14px]">Categories</p>
+                                    <p className="text-black font-bold text-[18px]">{selectedProject.categories.length} </p>
+                                </div>
+                            </div>
+                    </Box>
                     {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/>}
                     <TasksList id={id} />
             </Box>

@@ -3,7 +3,7 @@ import Logo from '../../assets/Logo.png'
 
 export function Header() {
     return (
-        <header className='fixed left-0 top-0 right-0 bg-white h-20 border-1 border-gray-200'>
+        <header className='left-0 top-0 right-0 bg-white h-20 border-1 border-gray-200'>
             <div className='p-2 mx-30'>
                 <nav className="flex items-center p-4">
                         <div className='flex-1'>          

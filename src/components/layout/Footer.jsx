@@ -2,7 +2,7 @@ import SLogo from '../../assets/S_logo.png'
 
 export function Footer() {
     return (
-        <footer className='bg-gray-20 h-[20px] border-t-gray-200 border-t-1'>       
+        <footer className='mt-50 bg-white h-20 max-h-20 border-t-1 border-gray-200'>       
             <div className="p-5 mx-30">
                 <div className="flex items-center justify-between">
                     <div className="">

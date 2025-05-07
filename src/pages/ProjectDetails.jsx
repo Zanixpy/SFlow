@@ -1,5 +1,5 @@
-import { ProjectInfo } from "../components/project/display/projectInfo.jsx"
 import { useParams } from "react-router-dom"
+import { ProjectInfo } from "../components/project/display/ProjectInfo"
 
 export function ProjectDetails() {
     const {id}= useParams()
