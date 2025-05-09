@@ -3,30 +3,32 @@ import { useUserStore } from "../../../store/useUserStore";
 import { CreateBtn } from "../../ui/button/CreateBtn";
 import { DeleteBtn } from "../../ui/button/DeleteBtn";
 import { useState } from "react";
+import { AddBtn } from "../../ui/button/AddBtn";
 
-export function CreateTask({id,OnClose}) {
+export function CreateTask({id,OnClose=null,categorie=null}) {
     // State Management
     const allProjects = useUserStore((state) => state.projects)
-    const updateProject = useUserStore((state) => state.updateProjectBudget)
+    const addTask = useUserStore((state) => state.addTask)
     const selectedProject = allProjects[id]
-    const categoriesName = selectedProject.categories && selectedProject.categories.map(item=>item.name)
 
     // Main variables, colors, categorie content and errors
     const [task, setTask] = useState({
         id: crypto.randomUUID(),
         name: "",
-        categorie: "",
+        totalBudget:"",
+        categorieLink: "",
       })
     
       const [errors, setErrors] = useState({
         name: "",
-        categorie:"",
+        totalBudget:"",
    
       })
       const validateTask = (data) => {
         const newErrors = {
           name: "",
-            categorie:"",
+          totalBudget:"",
+
 
         }
     
@@ -41,6 +43,16 @@ export function CreateTask({id,OnClose}) {
           newErrors.name = "The name already exist";
         } else if (selectedProject.name===data.name){
           newErrors.name = "You can't use the name of project";
+        }
+
+        if (!data.totalBudget) {
+          newErrors.totalBudget = "The sub-budget is required";
+        } else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 || data.totalBudget.includes('-')) {
+          newErrors.totalBudget = "Please enter a valid sub-budget"
+        } else if (
+          parseInt(data.totalBudget) > parseInt(categorie.remainingBudget)
+        ) {
+          newErrors.totalBudget = "The allocated sub-budget cannot exceed the categorie budget."
         }
     
         return newErrors;
@@ -61,6 +73,7 @@ export function CreateTask({id,OnClose}) {
     
         if (hasErrors === false) {
           await new Promise((resolve) => setTimeout(resolve, 300))  
+          addTask(selectedProject,categorie,task)
           OnClose()
         }   
       }
@@ -76,12 +89,12 @@ export function CreateTask({id,OnClose}) {
       placeholder: "Ex : Buy a car",
     },
     {
-      labelName: "Link categorie",
-      forHtml: "categorie",
-      type: "select",
-      contenu: categoriesName,
-      id: "categorie",
-      field: "categorie",
+      labelName: "Sub-budget (€)",
+      forHtml: "totalBudget",
+      type: "number",
+      id: "totalBudget",
+      field: "totalBudget",
+      placeholder: "Ex : 800",
     },
     {
       labelName:"Create",
@@ -128,26 +141,25 @@ export function CreateTask({id,OnClose}) {
 
               </>
            
-            ) : item.type === "select" ? (<>
-                    <label className="mr-5 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName} :</label>
-                    <select
-                      className='border p-1 border-gray-200 rounded-lg w-50 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]'
-                      name={item.field}
-                      id={item.forHtml}
-                      value={task[item.field]}
-                      onChange={(e) => handleChange(e, item.field)}
-                    >
-                      <option value="None">None</option>
-                      {item.contenu.map((item) => (
-                        <option value={item.name} key={item.name}>
-                          {item}
-                        </option>
-                      ))}
-                    </select>
+            ) : item.type === "number" ? (<>
 
-            </>) : (
+                <label className="block mb-2 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName}</label>
+                <input
+                  className="border p-1 border-gray-200 rounded-lg w-80 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]"
+                  type={item.type}
+                  id={item.forHtml}
+                  value={task[item.field]}
+                  onKeyDown={(e)=> {
+                    if (e.key==='e'|| e.key==='E' || e.key==='+' || e.key==='-') {
+                        e.preventDefault()
+                    }
+                  }}
+                  onChange={(e) => handleChange(e, item.field)}
+                  placeholder={item.placeholder}
+              />  
+      </>) : (
               <div className="mt-2 text-right max-w-100">
-                <CreateBtn OnClick={handleSubmit} Value={item.labelName} className={'px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] rounded-lg text-white font-bold'} />
+                <AddBtn onClick={handleSubmit} value={item.labelName}  />
               </div>
             )}
             {errors[item.field] && (

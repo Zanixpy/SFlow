@@ -16,7 +16,7 @@ export function CreateProject({OnClose}) {
         name:"",
         totalBudget:"",
         remainingBudget:"",
-        spentBudget:"0",
+        spentBudget:0,
         categories:[],
         tasks:[],
         status:{

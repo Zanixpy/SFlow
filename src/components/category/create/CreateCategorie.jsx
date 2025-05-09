@@ -11,35 +11,23 @@ export function CreateCategorie({ id, OnClose,  }) {
   const allProjects = useUserStore((state) => state.projects)
   const updateProject = useUserStore((state) => state.updateProjectBudget)
   const addCategorie = useUserStore((state)=> state.addCategorie)
+  const editValue = useUserStore(state=>state.editValue)
   const selectedProject = allProjects[id]
 
   // Main variables, colors, categorie content and errors
-  const [colorVal, setcolorVal] = useState({
-    availble: [
-      { color: "green", idColor: "0g" },
-      { color: "pink", idColor: "1p" },
-      { color: "yellow", idColor: "2y" },
-      { color: "orange", idColor: "3o" },
-      { color: "purple", idColor: "4p" },
-      { color: "red", idColor: "5r" },
-      { color: "blue", idColor: "6b" },
-      { color: "gray", idColor: "7g" },
-    ],
-    unavailable: [],
-  })
-
   const [categorie, setCategorie] = useState({
     id: crypto.randomUUID(),
     name: "",
     totalBudget: "",
-    color: "",
-    task: [],
+    remainingBudget:"",
+    spentBudget:0,
+    tasks: [],
+    pourcent:0
   })
 
   const [errors, setErrors] = useState({
     name: "",
     totalBudget: "",
-    color: "",
     maxCategories:"",
   })
 
@@ -48,12 +36,10 @@ export function CreateCategorie({ id, OnClose,  }) {
     const newErrors = {
       name: "",
       totalBudget: "",
-      color: "",
       maxCategories:"",
 
     };
 
-    const testColorAvailable = selectedProject.categories && selectedProject.categories.some(item => item.color === data.color )
     const testNameAvailable = selectedProject.categories && selectedProject.categories.some(item=> item.name === data.name)
 
     //Verifier le nom de la catégorie//
@@ -77,13 +63,6 @@ export function CreateCategorie({ id, OnClose,  }) {
     ) {
       newErrors.totalBudget = "The allocated sub-budget cannot exceed the project budget."
     }
-
-    if (!colorVal.availble.some(item=>item.color === data.color)) {
-      newErrors.color = "Select a color that is acceptable"
-    } else if (testColorAvailable){
-      newErrors.color = "This color is already taken"
-    }
-
 
     if (selectedProject.categories.length===8) {
       newErrors.maxCategories = "You have reached the maximum number of categories"
@@ -111,6 +90,8 @@ export function CreateCategorie({ id, OnClose,  }) {
       await new Promise((resolve) => setTimeout(resolve, 300))
       
       addCategorie(selectedProject,categorie)
+      const pourcent = Math.floor((categorie.spentBudget/categorie.totalBudget)*100)
+      editValue(selectedProject.categories,"pourcent",pourcent)
       OnClose()
       updateProject(selectedProject)
     }
@@ -136,14 +117,6 @@ export function CreateCategorie({ id, OnClose,  }) {
       placeholder: "Ex : 4000",
     },
     {
-      labelName: "Color",
-      forHtml: "color",
-      type: "select",
-      contenu: colorVal.availble,
-      id: "color",
-      field: "color",
-    },
-    {
       labelName:"Create",
       type:"submit",
       id:"create",
@@ -153,7 +126,7 @@ export function CreateCategorie({ id, OnClose,  }) {
 
   // Return JSX
   return (
-    <Box w={"100"} h={"100"} className="border text-black border-gray-200 rounded-lg shadow-sm">
+    <Box w={"100"} h={"80"} className="border text-black border-gray-200 rounded-lg shadow-sm">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
         <DeleteBtn OnClick={OnClose} value="X" className={'ml-auto text-gray-600 hover:text-gray-800'} />
@@ -204,23 +177,6 @@ export function CreateCategorie({ id, OnClose,  }) {
                       onChange={(e) => handleChange(e, item.field)}
                       placeholder={item.placeholder}
                     />  
-            </>) : item.type === "select" ? (<>
-                    <label className="mr-5 text-[15px] font-bold" htmlFor={item.forHtml}>{item.labelName} :</label>
-                    <select
-                      className='border p-1 border-gray-200 rounded-lg w-50 focus:outline-2 focus:outline-offset-2 focus:outline-[#38B2AC]'
-                      name={item.field}
-                      id={item.forHtml}
-                      value={categorie[item.field]}
-                      onChange={(e) => handleChange(e, item.field)}
-                    >
-                      <option value="None">Choose a color</option>
-                      {item.contenu.map((color) => (
-                        <option value={color.color} key={color.idColor}>
-                          {color.color}
-                        </option>
-                      ))}
-                    </select>
-
             </>) : (
               <div className="mt-2 text-right max-w-100">
                 <CreateBtn OnClick={handleSubmit} Value={item.labelName} className={'px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] rounded-lg text-white font-bold'} />

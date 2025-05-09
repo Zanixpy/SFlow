@@ -10,7 +10,8 @@ export const useUserStore = create((set) => ({
       if (projectIndex === -1) return state
 
       const updatedProjects = [...state.projects]
-      updatedProjects[projectIndex].categories.push(categorie)
+      const projectFound = updatedProjects[projectIndex].categories
+      projectFound.push(categorie)
       
       return { projects: updatedProjects }
     }),
@@ -53,5 +54,35 @@ export const useUserStore = create((set) => ({
       } else {return state}
 
       return { projects: updatedProjects }
+    }),
+    addTask:(project,categorie,task) => set((state)=> {
+        const projectIndex = state.projects.findIndex(p => p.id === project.id)
+        if (projectIndex === -1) return state
+
+        const updatedProjects = [...state.projects]
+
+        const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
+        const categorieFound = updatedProjects[projectIndex].categories[categorieIndex]
+        categorieFound.push(task)
+
+        return {projects : updatedProjects}
+    }),
+    removeTask:(project,categorie,task) => set((state)=> {
+      const projectIndex = state.projects.findIndex(p => p.id === project.id)
+      if (projectIndex === -1) return state
+
+      const updatedProjects = [...state.projects]
+
+      const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
+      const categorieFound = updatedProjects[projectIndex].categories[categorieIndex]
+
+      const updatedProject = {...categorieFound,
+        tasks: categorieFound.tasks.filter(ts => ts.id !==task.id)
+      }
+
+      categorieFound = updatedProject
+
+      return {projects: updatedProjects}
+
     })
   }))

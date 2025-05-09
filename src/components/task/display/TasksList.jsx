@@ -1,34 +1,38 @@
 import { Box } from "../../ui/container/Box";
 import { CreateBtn } from "../../ui/button/CreateBtn";
 import { CreateTask } from "../create/CreateTask";
+import { DeleteBtnV2 } from "../../ui/button/DeleteBtnV2";
 import { useUserStore } from "../../../store/useUserStore";
 import { useState } from "react";
 
-export function TasksList({id}) {
+export function TasksList({id,categorie=null}) {
     const allProjects = useUserStore(state=>state.projects)
+    const removeTask = useUserStore(state=> state.removeTask)
     const selectedProject = allProjects[id]
 
-    const [showCreateTask, setShowCreateTask] = useState(false)
+    const onDelete= async (item) => {
+        await new Promise(resolve=>setTimeout(resolve,200))
+        removeTask(selectedProject,categorie,item)
+    }
 
-    return ( <Box w={"340"} h={"150"} >
-        <div className="flex items-center">
-            <h1 className="mr-5 text-[25px] font-bold">Tasks</h1>
-            <CreateBtn OnClick={()=>setShowCreateTask(true)} Value={"+"} className={'text-[20px] border rounded-full px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] text-white font-bold'} />
-        </div>  
+    return ( <Box w={"340"} h={"150"} >  
     <div className="flex items-center">
-    {selectedProject.tasks && selectedProject.tasks.map(item=>
-        <CategoriesCircleBox h={"60"} w={"60"} padding="p-10" color={item.color} key={item.id}>
-            <div className="text-center max-w-100">
-                        <p className="mb-2 text-[30px] font-bold ">{item.name}</p>
-                        <div className="flex items-center">
-                            <p className="mr-2">Sub-budget :</p>
-                            <p className="text-[20px] font-bold" >{item.totalBudget}€</p>
-                        </div>
+        {selectedProject.tasks && selectedProject.tasks.map(item=>
+          <Box h={"40"} w={"280"} padding="px-4 py-3" margin="m-0" className="border border-gray-200 shadow-xs rounded-lg" key={item.id}>
+            <div className="flex justify-between items-center mb-5">
+                        <input 
+                            type="checkbox" 
+                            name="" 
+                            id="" 
+                        />
+                        <p>{item.name}</p>
+                        <DeleteBtnV2 onClick={onDelete(item)}/>
+
+                  
             </div>
-        </CategoriesCircleBox>
-    )}
-    {showCreateTask && <CreateTask id={id} OnClose={()=>setShowCreateTask(false)} />}
-    </div>
+         </Box>
+        )}
+        </div>
 </Box>)
     
 }

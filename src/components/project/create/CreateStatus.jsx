@@ -27,7 +27,7 @@ export function CreateStatus({id, Onclose}) {
 
     return (
         <div className="flex items-center">
-            <div className="m-8 max-h-30 max-w-100 rounded-lg border-1 border-gray-300">
+            <div className="m-8 max-h-30 max-w-100 rounded-lg border-1 border-gray-300 z-2">
                 {status && status.map(item =>
                      <div onClick={handleClick} key={item.id} id={item.id} className={`flex items-center p-2 max-w-30 max-h-30 ${item.border && 'border-b-1 border-gray-300'} hover:bg-gray-100 transition-[var(bg-gray-100)] cursor-pointer `}>
                         <div className={`${item.color} p-1 mr-2 rounded-full border-1`}></div>

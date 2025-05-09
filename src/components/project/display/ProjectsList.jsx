@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { CreateBtn } from "../../ui/button/CreateBtn.jsx"
 import { Box } from "../../ui/container/Box.jsx"
 import { CreateStatus } from "../create/CreateStatus.jsx"
+import { AddBtn } from "../../ui/button/AddBtn.jsx"
 
 export function ProjectsList() {
     const allProjects = useUserStore(state => state.projects)
@@ -16,20 +17,20 @@ export function ProjectsList() {
     
 
     return (
-        <Box w={"330"} h={"200"} padding="p-4" margin="mx-30 mt-4 mb-10" className="text-black">
-                <div className="flex items-center mb-15">
-                    <h1 className="mr-5 text-[25px] font-bold">Projects</h1>
-                    <CreateBtn OnClick={() => setShowCreateProject(true)} Value={"+"} className={'text-[20px] border rounded-full px-4 py-2 bg-[#38B2AC] hover:bg-[#2C7A7B] text-white font-bold'}  />
+        <Box w={"300"} h={"200"} padding="p-4" margin="mx-30 mt-4 mb-10" className="text-black">
+                <div className="flex justify-between items-center mb-15">
+                    <h1 className="text-[25px] font-bold">Budget projects</h1>
+                    <AddBtn onClick={() => setShowCreateProject(true)} value={"+ New project"} />
                 </div>
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
-                <ul className="flex flex-wrap">
+                <ul className="flex justify-between flex-wrap">
                 {allProjects && allProjects.map((item,index)=>
-                    <li key={item.id} className="p-5 mb-8  mr-25 w-80 h-60 flex-shrink-0 rounded-lg border border-gray-300 hover:shadow-lg shadow-sm transition-colors">
+                    <li key={item.id} className="p-5 mb-8 w-80 h-60 flex-shrink-0 rounded-lg border border-gray-300 hover:shadow-lg shadow-sm transition-colors">
                         <p className="text-[25px] font-bold mb-4">{item.name}</p>
                         <p className="mb-2">{item.spentBudget} € / {item.totalBudget} €</p>
                         <p className="text-gray-500 mb-2 ">{item.categories.length} categories</p>
-                        <div className="w-26" onClick={()=>navigate(`/projects/${index}`)}>
-                            <p className="mb-2 text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">See details -{'>'}</p>
+                        <div className="w-30" onClick={()=>navigate(`/projects/${index}`)}>
+                            <p className="mb-2 text-gray-400 hover:text-gray-600 cursor-pointer transition-colors">View details -{'>'}</p>
                         </div>
                         <input 
                             className={`ml-auto px-5 py-2 rounded ${item.status?.color} text-white cursor-pointer`} 
