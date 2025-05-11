@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { useUserStore } from "../../../store/useUserStore.js"
-import { DeleteBtn } from "../../ui/button/DeleteBtn.jsx"
-import { CategoriesList } from "../../category/display/categoriesList.jsx"
 import { Box } from "../../ui/container/Box.jsx"
-import { TasksList } from "../../task/display/TasksList.jsx"
 import { DeleteBtnV1 } from "../../ui/button/DeleteBtnV1.jsx"
+import { CategoriesList } from "../../category/display/CategoriesList.jsx"
 
 export function ProjectInfo({id}) {
 
@@ -12,6 +10,7 @@ export function ProjectInfo({id}) {
     const allProjects = useUserStore(state=>state.projects)
     const removeProject = useUserStore(state=>state.removeProject)
     const selectedProject = allProjects[id]
+    const pourcent = Math.floor((selectedProject?.spentBudget / selectedProject?.totalBudget) * 100)
 
     // Variable
     const navigate= useNavigate()
@@ -38,32 +37,43 @@ export function ProjectInfo({id}) {
                     <div className="flex items-center justify-between ">
                         <h1 className="text-[40px] font-bold ">{selectedProject?.name}</h1>
                         <DeleteBtnV1 onClick={onDeleteProject} value={'Delete'}/>                    </div>
-                    <Box  w={"300"} h={"60"} margin="my-4" padding="p-4" className="border-1 border-gray-200 shadow-sm rounded-lg">
-                            <div className="flex mb-2 text-[20px] font-bold"> 
-                                <p className="flex-1 w-30">Overview</p>
+                    <Box  w={"300"} h={"60"} margin="my-4" padding="p-6" className="border-1 border-gray-200 shadow-sm rounded-lg">
+                            <div className="flex mb-2 text-[20px]"> 
                                 <div className="flex-1">
-                                        <p>Budget utilization</p>
-                                        <p className="inline text-[15px] font-normal">{selectedProject?.spentBudget} € / {selectedProject?.totalBudget} €</p>
-                                        <div className="max-w-150 bg-[#68D391] border border-gray-200 py-1 rounded-lg"></div>
+                                    <p className="font-bold mb-3">Overview</p>
+                                    <div className="flex flex-wrap justify-between max-w-100 items-center text-gray-500">
+                                        <div className="w-50 mb-5">
+                                            <p className="text-[14px]">Global budget</p>
+                                            <p className="text-black font-bold text-[18px]">{selectedProject?.totalBudget} €</p>
+                                        </div >
+                                        <div className="w-50 mb-5">
+                                            <p className="text-[14px]">Current expenses</p>
+                                            <p className="text-black font-bold text-[18px]">{selectedProject?.spentBudget} €</p>
+                                        </div>
+                                        <div className="w-50 mb-5">
+                                            <p className="text-[14px]">Categories</p>
+                                            <p className="text-black font-bold text-[18px]">{selectedProject?.categories.length} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                        <p className="font-bold mb-3">Budget utilization</p>
+                                        <div className="flex items-center justify-between text-[15px]" >
+                                        <p className="">
+                                            {selectedProject?.spentBudget} € / {selectedProject?.totalBudget} €
+                                        </p>
+                                        <p className="text-gray-500">
+                                            {Math.floor((selectedProject?.spentBudget / selectedProject?.totalBudget) * 100)} %
+                                        </p>       
+                                        </div>
+                                        <div className="max-w-150  border border-gray-200 p-1 rounded-lg">
+                                            <div className={`bg-gradient-to-r from-[#38B2AC] to-[#68D391] w-[${pourcent}%] p-1 rounded-lg transition-all duration-500`}></div>
+                                        </div>
 
                                 </div>
-                            </div>
-                            <div className="flex justify-between max-w-100 items-center mb-8 text-[15px] text-gray-500">
-                                <div>
-                                    <p className="text-[14px]">Global budget</p>
-                                    <p className="text-black font-bold text-[18px]">{selectedProject?.totalBudget} €</p>
-                                </div>
-                                <div>
-                                    <p className="text-[14px]">Current expenses</p>
-                                    <p className="text-black font-bold text-[18px]">{selectedProject?.spentBudget} €</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-between max-w-100 items-center text-[15px] text-gray-500">
-                                <div>
-                                    <p className="text-[14px]">Categories</p>
-                                    <p className="text-black font-bold text-[18px]">{selectedProject?.categories.length} </p>
-                                </div>
-                            </div>
+                          
+                            </div>           
+                          
                     </Box>
                     {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/>}
             </Box>

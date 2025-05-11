@@ -9,6 +9,7 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
     // State Management
     const allProjects = useUserStore((state) => state.projects)
     const addTask = useUserStore((state) => state.addTask)
+    const updateCategorieBudget = useUserStore((state)=>state.updateCategorieBudget)
     const selectedProject = allProjects[id]
 
     // Main variables, colors, categorie content and errors
@@ -75,34 +76,35 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
           await new Promise((resolve) => setTimeout(resolve, 300))  
           addTask(selectedProject,categorie,task)
           OnClose()
+          updateCategorieBudget(selectedProject,categorie)
         }   
       }
 
        // data for inputs
-  const dataInputs = [
-    {
-      labelName: "Title of task",
-      forHtml: "name",
-      type: "text",
-      id: "name",
-      field: "name",
-      placeholder: "Ex : Buy a car",
-    },
-    {
-      labelName: "Sub-budget (€)",
-      forHtml: "totalBudget",
-      type: "number",
-      id: "totalBudget",
-      field: "totalBudget",
-      placeholder: "Ex : 800",
-    },
-    {
-      labelName:"Create",
-      type:"submit",
-      id:"create",
-      field:"maxCategories"
-    }
-  ]
+      const dataInputs = [
+        {
+          labelName: "Title of task",
+          forHtml: "name",
+          type: "text",
+          id: "name",
+          field: "name",
+          placeholder: "Ex : Buy a car",
+        },
+        {
+          labelName: "Sub-budget (€)",
+          forHtml: "totalBudget",
+          type: "number",
+          id: "totalBudget",
+          field: "totalBudget",
+          placeholder: "Ex : 800",
+        },
+        {
+          labelName:"Create",
+          type:"submit",
+          id:"create",
+          field:"maxCategories"
+        }
+      ]
 
 
   return (

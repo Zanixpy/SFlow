@@ -5,7 +5,7 @@ import { DeleteBtnV2 } from "../../ui/button/DeleteBtnV2";
 import { useUserStore } from "../../../store/useUserStore";
 import { useState } from "react";
 
-export function TasksList({id,categorie=null}) {
+export function TasksList({id,index,categorie=null}) {
     const allProjects = useUserStore(state=>state.projects)
     const removeTask = useUserStore(state=> state.removeTask)
     const selectedProject = allProjects[id]
@@ -26,9 +26,7 @@ export function TasksList({id,categorie=null}) {
                             id="" 
                         />
                         <p>{item.name}</p>
-                        <DeleteBtnV2 onClick={onDelete(item)}/>
-
-                  
+                        <DeleteBtnV2 onClick={onDelete(item)}/>    
             </div>
          </Box>
         )}

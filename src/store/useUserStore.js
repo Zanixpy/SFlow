@@ -42,6 +42,22 @@ export const useUserStore = create((set) => ({
       
       return { projects: updatedProjects }
     }),
+    updateCategorieBudget: (project,categorie) => set((state)=>{
+        const projectIndex = state.projects.findIndex(p => p.ID === project.ID);
+        if (projectIndex === -1) return state
+        
+        const updatedProjects = [...state.projects]
+
+        const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
+        if (categorieIndex === -1) return state
+
+
+        const totalTasksBudget = updatedProjects[projectIndex].categories[categorieIndex].tasks.reduce((sum, task) => sum + parseInt(task.totalBudget), 0)
+        updatedProjects[projectIndex].categories[categorieIndex].spentBudget = totalTasksBudget
+        updatedProjects[projectIndex].categories[categorieIndex].remainingBudget = parseInt(categorie.totalBudget) - totalTasksBudget
+        
+        return { projects: updatedProjects }
+    }),
     editValue: (project,attribut,value) => set((state)=>{
       const projectIndex = state.projects.findIndex(p => p.id === project.id);
       if (projectIndex === -1) return state
@@ -63,7 +79,8 @@ export const useUserStore = create((set) => ({
 
         const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
         const categorieFound = updatedProjects[projectIndex].categories[categorieIndex]
-        categorieFound.push(task)
+        categorieFound.tasks.push(task)
+        console.log(categorieFound)
 
         return {projects : updatedProjects}
     }),
