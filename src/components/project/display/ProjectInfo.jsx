@@ -10,7 +10,6 @@ export function ProjectInfo({id}) {
     const allProjects = useUserStore(state=>state.projects)
     const removeProject = useUserStore(state=>state.removeProject)
     const selectedProject = allProjects[id]
-    const pourcent = Math.floor((selectedProject?.spentBudget / selectedProject?.totalBudget) * 100)
 
     // Variable
     const navigate= useNavigate()
@@ -67,7 +66,10 @@ export function ProjectInfo({id}) {
                                         </p>       
                                         </div>
                                         <div className="max-w-150  border border-gray-200 p-1 rounded-lg">
-                                            <div className={`bg-gradient-to-r from-[#38B2AC] to-[#68D391] w-[${pourcent}%] p-1 rounded-lg transition-all duration-500`}></div>
+                                            <div 
+                                                className="bg-gradient-to-r from-[#38B2AC] to-[#68D391] p-1 rounded-lg transition-all duration-500"
+                                                style={{ width: `${selectedProject?.pourcent || 0}%` }}
+                                            ></div>
                                         </div>
 
                                 </div>

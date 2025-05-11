@@ -10,11 +10,17 @@ import { TasksList } from "../../task/display/TasksList.jsx";
 export function CategoriesList({ id }) {
   const allProjects = useUserStore((state) => state.projects);
   const removeCategorie = useUserStore((state) => state.removeCategorie);
+  const updateProject = useUserStore((state) => state.updateProjectBudget)
   const selectedProject = allProjects[id];
 
   const onDeleteCategorie = async (item) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     removeCategorie(selectedProject, item);
+    const updatedProject = {
+      ...selectedProject,
+      categories: selectedProject.categories.filter(cat => cat.id !== item.id)
+    };
+    updateProject(updatedProject);
   };
 
   const [showCreateCategorie, setShowCreateCategorie] = useState(false);
@@ -66,7 +72,13 @@ export function CategoriesList({ id }) {
                   {Math.floor((item.spentBudget / item.totalBudget) * 100)} %
                 </p>
               </div>
-              <div className="w-auto bg-[#68D391] border border-gray-200 py-1 rounded-lg mb-2"></div>
+              <div className="max-w-300  border border-gray-200 p-1 rounded-lg">
+                    <div 
+                        className="bg-gradient-to-r from-[#38B2AC] to-[#68D391] p-1 rounded-lg transition-all duration-500"
+                        style={{ width: `${item.pourcent || 0}%` }}> 
+                    </div>
+              </div>
+              
               <div className="flex items-center text-[14px] ">
                 <p
                   onClick={(event) => {

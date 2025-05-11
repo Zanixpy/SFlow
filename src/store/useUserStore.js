@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { create } from 'zustand'
 
 
@@ -36,9 +37,16 @@ export const useUserStore = create((set) => ({
       if (projectIndex === -1) return state
       
       const updatedProjects = [...state.projects]
+
       const totalCategoriesBudget = project.categories.reduce((sum, category) => sum + parseInt(category.totalBudget), 0)
-      updatedProjects[projectIndex].spentBudget = totalCategoriesBudget
-      updatedProjects[projectIndex].remainingBudget = parseInt(project.totalBudget) - totalCategoriesBudget
+
+      const updatedProject = {...updatedProjects[projectIndex],
+        spentBudget: totalCategoriesBudget,
+        remainingBudget: parseInt(project.totalBudget) - totalCategoriesBudget,
+        pourcent: Math.floor((totalCategoriesBudget / parseInt(project.totalBudget)) * 100)
+      }
+
+      updatedProjects[projectIndex] = updatedProject
       
       return { projects: updatedProjects }
     }),
@@ -51,14 +59,19 @@ export const useUserStore = create((set) => ({
         const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
         if (categorieIndex === -1) return state
 
-
         const totalTasksBudget = updatedProjects[projectIndex].categories[categorieIndex].tasks.reduce((sum, task) => sum + parseInt(task.totalBudget), 0)
-        updatedProjects[projectIndex].categories[categorieIndex].spentBudget = totalTasksBudget
-        updatedProjects[projectIndex].categories[categorieIndex].remainingBudget = parseInt(categorie.totalBudget) - totalTasksBudget
+
+        const updateCategorie= {...updatedProjects[projectIndex].categories[categorieIndex],
+          spentBudget:totalTasksBudget,
+          remainingBudget: parseInt(categorie.totalBudget) - totalTasksBudget,
+          pourcent: Math.floor((totalTasksBudget / parseInt(categorie.totalBudget)) * 100)
+        }
+
+        updatedProjects[projectIndex].categories[categorieIndex] = updateCategorie
         
         return { projects: updatedProjects }
     }),
-    editValue: (project,attribut,value) => set((state)=>{
+    editValueProject: (project,attribut,value) => set((state)=>{
       const projectIndex = state.projects.findIndex(p => p.id === project.id);
       if (projectIndex === -1) return state
 
@@ -71,6 +84,23 @@ export const useUserStore = create((set) => ({
 
       return { projects: updatedProjects }
     }),
+    editValueCategorie: (project,categorie,attribut,value) => set((state)=>{
+      const projectIndex = state.projects.findIndex(p => p.id === project.id);
+      if (projectIndex === -1) return state
+
+      const updatedProjects = [...state.projects]
+      const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
+
+
+
+      const attributIsHere = Object.keys(updatedProjects[projectIndex].categories[categorieIndex]).includes(attribut)
+      if (attributIsHere===true) {
+          updatedProjects[projectIndex].categories[categorieIndex][attribut]= value          
+      } else {return state}
+
+      return { projects: updatedProjects }
+    }),
+
     addTask:(project,categorie,task) => set((state)=> {
         const projectIndex = state.projects.findIndex(p => p.id === project.id)
         if (projectIndex === -1) return state
@@ -91,13 +121,12 @@ export const useUserStore = create((set) => ({
       const updatedProjects = [...state.projects]
 
       const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
-      const categorieFound = updatedProjects[projectIndex].categories[categorieIndex]
 
-      const updatedProject = {...categorieFound,
-        tasks: categorieFound.tasks.filter(ts => ts.id !==task.id)
+      const updatedProject = {...updatedProjects[projectIndex].categories[categorieIndex],
+        tasks: updatedProjects[projectIndex].categories[categorieIndex].tasks.filter(ts => ts.id !==task.id)
       }
 
-      categorieFound = updatedProject
+      updatedProjects[projectIndex].categories[categorieIndex] = updatedProject
 
       return {projects: updatedProjects}
 

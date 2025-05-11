@@ -10,8 +10,8 @@ export function CreateCategorie({ id, OnClose,  }) {
   // State Management
   const allProjects = useUserStore((state) => state.projects)
   const updateProject = useUserStore((state) => state.updateProjectBudget)
+  const editValue= useUserStore((state)=>state.editValueCategorie)
   const addCategorie = useUserStore((state)=> state.addCategorie)
-  const editValue = useUserStore(state=>state.editValue)
   const selectedProject = allProjects[id]
 
   // Main variables, colors, categorie content and errors
@@ -88,12 +88,11 @@ export function CreateCategorie({ id, OnClose,  }) {
 
     if (hasErrors === false) {
       await new Promise((resolve) => setTimeout(resolve, 300))
-      
       addCategorie(selectedProject,categorie)
-      const pourcent = Math.floor((categorie.spentBudget/categorie.totalBudget)*100)
-      editValue(selectedProject.categories,"pourcent",pourcent)
-      OnClose()
+      editValue(selectedProject,categorie,"remainingBudget",categorie.totalBudget)
       updateProject(selectedProject)
+
+      OnClose()
     }
     
   }
@@ -126,7 +125,7 @@ export function CreateCategorie({ id, OnClose,  }) {
 
   // Return JSX
   return (
-    <Box w={"100"} h={"80"} className="border text-black border-gray-200 rounded-lg shadow-sm">
+    <Box w={"100"} h={"80"} className="border text-black border-gray-200 z-8 rounded-lg shadow-sm">
       <div className="flex items-center max-w-100 mb-5">
         <h1 className="text-lg font-bold">New categorie</h1>
         <DeleteBtn OnClick={OnClose} value="X" className={'ml-auto text-gray-600 hover:text-gray-800'} />

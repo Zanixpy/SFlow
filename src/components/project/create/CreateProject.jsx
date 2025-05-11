@@ -8,7 +8,7 @@ export function CreateProject({OnClose}) {
     // State management
     const allProjects= useUserStore(state=>state.projects)
     const addProject= useUserStore(state=> state.addProject)
-    const editValue = useUserStore(state=>state.editValue )
+    const editValue = useUserStore(state=>state.editValueProject )
 
     // Main variables, project content and errors
     const [project,setProject]=useState({
@@ -23,7 +23,8 @@ export function CreateProject({OnClose}) {
             id:"1TD",
             activity:"To do", 
             color:"bg-gray-400",
-        }
+        },
+        pourcent:0
     })
    
     const [errors, setErrors]= useState({
