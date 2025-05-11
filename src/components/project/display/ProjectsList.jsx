@@ -17,7 +17,7 @@ export function ProjectsList() {
     
 
     return (
-        <Box w={"300"} h={"200"} padding="p-4" margin="mx-30 mt-4 mb-10" className="text-black">
+        <Box w={"300"} h={"200"} padding="p-3" margin="mx-30 mt-8 mb-10" className="text-black">
                 <div className="flex justify-between items-center mb-15">
                     <h1 className="text-[25px] font-bold">Budget projects</h1>
                     <AddBtn onClick={() => setShowCreateProject(true)} value={"+ New project"} />
@@ -25,7 +25,7 @@ export function ProjectsList() {
                 {showCreateProject && <CreateProject OnClose={() => setShowCreateProject(false)} />}
                 <ul className="flex justify-between flex-wrap">
                 {allProjects && allProjects.map((item,index)=>
-                    <li key={item.id} className="p-5 mb-8 w-80 h-60 flex-shrink-0 rounded-lg border border-gray-300 hover:shadow-lg shadow-sm transition-colors">
+                    <li key={item.id} className="p-5 mb-8 w-80 h-60 rounded-lg border border-gray-300 hover:shadow-lg shadow-sm transition-colors">
                         <p className="text-[25px] font-bold mb-4">{item.name}</p>
                         <p className="mb-2">{item.spentBudget} € / {item.totalBudget} €</p>
                         <p className="text-gray-500 mb-2 ">{item.categories.length} categories</p>
