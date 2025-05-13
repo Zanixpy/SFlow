@@ -109,6 +109,22 @@ export const useUserStore = create((set,get) => ({
 
       return { projects: updatedProjects }
     }),
+    editValueTask:(project,categorie,task,attribut,value) => set((state)=>{
+      const projectIndex = state.projects.findIndex(p => p.id === project.id);
+      if (projectIndex === -1) return state
+
+      const updatedProjects = [...state.projects]
+      const categorieIndex = updatedProjects[projectIndex].categories.findIndex(c=>c.id===categorie.id)
+      const taskIndex = updatedProjects[projectIndex].categories[categorieIndex].tasks.findIndex(t=>t.id===task.id)
+
+      const attributIsHere = Object.keys(updatedProjects[projectIndex].categories[categorieIndex].tasks[taskIndex]).includes(attribut)
+      if (attributIsHere===true) {
+          updatedProjects[projectIndex].categories[categorieIndex].tasks[taskIndex][attribut]= value          
+      } else {return state}
+
+      return { projects: updatedProjects }
+    }),
+
     addTask:(project,categorie,task) => set((state)=> {
         const projectIndex = state.projects.findIndex(p => p.id === project.id)
         if (projectIndex === -1) return state

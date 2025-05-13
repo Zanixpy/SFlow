@@ -10,6 +10,7 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
     const allProjects = useUserStore((state) => state.projects)
     const addTask = useUserStore((state) => state.addTask)
     const updateCategorieBudget = useUserStore((state)=>state.updateCategorieBudget)
+    const editValue = useUserStore((state)=>state.editValueTask)
     const selectedProject = allProjects[id]
 
     // Main variables, colors, categorie content and errors
@@ -17,6 +18,7 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
         id: crypto.randomUUID(),
         name: "",
         totalBudget:"",
+        checked:false,
         categorieLink: "",
       })
     
@@ -75,8 +77,10 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
         if (hasErrors === false) {
           await new Promise((resolve) => setTimeout(resolve, 300))  
           addTask(selectedProject,categorie,task)
+          editValue(selectedProject,categorie,task,"categorieLink",categorie.name)
           OnClose()
           updateCategorieBudget(selectedProject,categorie)
+          console.log(task)
         }   
       }
 

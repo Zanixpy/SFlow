@@ -4,7 +4,7 @@ import { useUserStore } from "../../../store/useUserStore.js"
 export function CreateStatus({id, Onclose}) {
 
     const allProjects = useUserStore(state => state.projects)
-    const editValue = useUserStore(state => state.editValue)
+    const editValue = useUserStore(state => state.editValueProject)
     const selectedProject = allProjects[id]
 
     const status=[
