@@ -1,6 +1,6 @@
 import { Box } from "../ui/container/Box";
 
-export function ResumeTag({name="Criteria",value='Garlfield'}) {
+export function ResumeTag({name,value}) {
     return ( 
         <Box w={'70'} h={'25'} padding="p-6" margin="m-0 mr-5" className="border border-gray-300 rounded-lg shadow-xs">
             <div className="text-black">

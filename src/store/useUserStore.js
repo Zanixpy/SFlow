@@ -2,8 +2,17 @@ import { useEffect } from 'react'
 import { create } from 'zustand'
 
 
-export const useUserStore = create((set) => ({
-    projects: [], 
+export const useUserStore = create((set,get) => ({
+    projects: [],
+    getTotalBudget: () => get().projects.reduce((sum,p)=> sum + parseInt(p.totalBudget),0),
+    getSpentBudget: () => get().projects.reduce((sum,p)=> sum + parseInt(p.spentBudget),0),
+    getPourcent: () => {
+        const total= get().getTotalBudget()
+        const spent= get().getSpentBudget()
+
+        if (total===0) return 0
+        return Math.floor((spent/total)*100)
+    },
     removeProject:(project) => set((state) => ({ projects: state.projects.filter((item)=>item.name!==project.name)})),
     addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
     addCategorie: (project,categorie) => set((state) =>{
@@ -33,7 +42,7 @@ export const useUserStore = create((set) => ({
 
     }),
     updateProjectBudget: (project) => set((state) => {
-      const projectIndex = state.projects.findIndex(p => p.ID === project.ID);
+      const projectIndex = state.projects.findIndex(p => p.id === project.id);
       if (projectIndex === -1) return state
       
       const updatedProjects = [...state.projects]
@@ -51,7 +60,7 @@ export const useUserStore = create((set) => ({
       return { projects: updatedProjects }
     }),
     updateCategorieBudget: (project,categorie) => set((state)=>{
-        const projectIndex = state.projects.findIndex(p => p.ID === project.ID);
+        const projectIndex = state.projects.findIndex(p => p.id === project.id);
         if (projectIndex === -1) return state
         
         const updatedProjects = [...state.projects]
@@ -100,7 +109,6 @@ export const useUserStore = create((set) => ({
 
       return { projects: updatedProjects }
     }),
-
     addTask:(project,categorie,task) => set((state)=> {
         const projectIndex = state.projects.findIndex(p => p.id === project.id)
         if (projectIndex === -1) return state

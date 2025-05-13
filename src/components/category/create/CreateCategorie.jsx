@@ -91,7 +91,6 @@ export function CreateCategorie({ id, OnClose,  }) {
       addCategorie(selectedProject,categorie)
       editValue(selectedProject,categorie,"remainingBudget",categorie.totalBudget)
       updateProject(selectedProject)
-
       OnClose()
     }
     

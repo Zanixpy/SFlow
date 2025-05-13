@@ -30,7 +30,7 @@ export function CategoriesList({ id }) {
   const [activeStatusIndex, setActiveStatusIndex] = useState(null);
 
   return (
-    <Box w={"340"} h={"150"} padding="p-0" margin="mt-10">
+    <Box w={"300"} h={"200"} padding="p-0" margin="my-10">
       <div className="flex justify-between items-center mb-10">
         <h1 className="mr-5 text-[25px] font-bold">Categories</h1>
         <AddBtn
@@ -79,7 +79,7 @@ export function CategoriesList({ id }) {
                     </div>
               </div>
               
-              <div className="flex items-center text-[14px] ">
+              <div className="flex items-center text-[14px] p-2">
                 <p
                   onClick={(event) => {
                     event.stopPropagation();
