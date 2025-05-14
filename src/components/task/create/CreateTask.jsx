@@ -5,13 +5,14 @@ import { DeleteBtn } from "../../ui/button/DeleteBtn";
 import { useState } from "react";
 import { AddBtn } from "../../ui/button/AddBtn";
 
-export function CreateTask({id,OnClose=null,categorie=null}) {
+export function CreateTask({id,OnClose=null,categorieIndex=null}) {
     // State Management
     const allProjects = useUserStore((state) => state.projects)
     const addTask = useUserStore((state) => state.addTask)
     const updateCategorieBudget = useUserStore((state)=>state.updateCategorieBudget)
     const editValue = useUserStore((state)=>state.editValueTask)
     const selectedProject = allProjects[id]
+    const selectedCategorie = selectedProject.categories[categorieIndex]
 
     // Main variables, colors, categorie content and errors
     const [task, setTask] = useState({
@@ -53,7 +54,7 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
         } else if (data.totalBudget[0] === "0" && data.totalBudget.length !==1 || data.totalBudget.includes('-')) {
           newErrors.totalBudget = "Please enter a valid sub-budget"
         } else if (
-          parseInt(data.totalBudget) > parseInt(categorie.remainingBudget)
+          parseInt(data.totalBudget) > parseInt(selectedCategorie.remainingBudget)
         ) {
           newErrors.totalBudget = "The allocated sub-budget cannot exceed the categorie budget."
         }
@@ -76,11 +77,10 @@ export function CreateTask({id,OnClose=null,categorie=null}) {
     
         if (hasErrors === false) {
           await new Promise((resolve) => setTimeout(resolve, 300))  
-          addTask(selectedProject,categorie,task)
-          editValue(selectedProject,categorie,task,"categorieLink",categorie.name)
+          addTask(selectedProject,selectedCategorie,task)
+          editValue(selectedProject,selectedCategorie,task,"categorieLink",selectedCategorie.name)
           OnClose()
-          updateCategorieBudget(selectedProject,categorie)
-          console.log(task)
+          updateCategorieBudget(selectedProject,selectedCategorie)
         }   
       }
 

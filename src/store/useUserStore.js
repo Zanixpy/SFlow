@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 
-export const useUserStore = create((set,get) => ({
+export const useUserStore = create(persist(
+    (set,get) => ({
     projects: [],
     getTotalBudget: () => get().projects.reduce((sum,p)=> sum + parseInt(p.totalBudget),0),
     getSpentBudget: () => get().projects.reduce((sum,p)=> sum + parseInt(p.spentBudget),0),
@@ -155,4 +157,4 @@ export const useUserStore = create((set,get) => ({
       return {projects: updatedProjects}
 
     })
-  }))
+  })))

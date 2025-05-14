@@ -21,6 +21,7 @@ export function AppRoutes() {
                 <Route path='/setting' element={<Dashboard/>} />
                 <Route path='/notFound' element={<NotFound/>} />
             </Routes>
+        <Footer/>
         </BrowserRouter>
     )
     

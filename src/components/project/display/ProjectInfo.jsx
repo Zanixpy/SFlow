@@ -33,49 +33,47 @@ export function ProjectInfo({id}) {
                     <div className="mb-4 text-gray-500 text-[14px] hover:text-gray-700 cursor-pointer w-55 transitions-colors" onClick={()=>navigate("/projects")}>
                         <p><span className="text-[17px]">{'<'}-</span> Retour au tableau de bord</p>
                     </div>
-                    <div className="flex items-center justify-between ">
-                        <h1 className="text-[40px] font-bold ">{selectedProject?.name}</h1>
-                        <DeleteBtnV1 onClick={onDeleteProject} value={'Delete'}/>                    </div>
-                    <Box  w={"300"} h={"60"} margin="my-4" padding="p-6" className="border-1 border-gray-200 shadow-sm rounded-lg">
-                            <div className="flex mb-2 text-[20px]"> 
+                    <div className="flex items-center justify-between mb-6">
+                        <h1 className="text-[40px] font-bold">{selectedProject?.name}</h1>
+                        <DeleteBtnV1 onClick={onDeleteProject} value={'Delete'}/>
+                    </div>
+                    <Box w={"300"} h={"auto"} margin="my-4" padding="p-6" className="border-1 border-gray-200 shadow-sm rounded-lg">
+                            <div className="flex flex-col md:flex-row gap-6"> 
                                 <div className="flex-1">
                                     <p className="font-bold mb-3">Overview</p>
-                                    <div className="flex flex-wrap justify-between max-w-100 items-center text-gray-500">
-                                        <div className="w-50 mb-5">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-500">
+                                        <div className="w-full">
                                             <p className="text-[14px]">Global budget</p>
                                             <p className="text-black font-bold text-[18px]">{selectedProject?.totalBudget} €</p>
-                                        </div >
-                                        <div className="w-50 mb-5">
+                                        </div>
+                                        <div className="w-full">
                                             <p className="text-[14px]">Current expenses</p>
                                             <p className="text-black font-bold text-[18px]">{selectedProject?.spentBudget} €</p>
                                         </div>
-                                        <div className="w-50 mb-5">
+                                        <div className="w-full">
                                             <p className="text-[14px]">Categories</p>
-                                            <p className="text-black font-bold text-[18px]">{selectedProject?.categories.length} </p>
+                                            <p className="text-black font-bold text-[18px]">{selectedProject?.categories.length}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                        <p className="font-bold mb-3">Budget utilization</p>
-                                        <div className="flex items-center justify-between text-[15px]" >
-                                        <p className="">
+                                    <p className="font-bold mb-3">Budget utilization</p>
+                                    <div className="flex items-center justify-between text-[15px] mb-2">
+                                        <p>
                                             {selectedProject?.spentBudget} € / {selectedProject?.totalBudget} €
                                         </p>
                                         <p className="text-gray-500">
                                             {Math.floor((selectedProject?.spentBudget / selectedProject?.totalBudget) * 100)} %
                                         </p>       
-                                        </div>
-                                        <div className="max-w-150  border border-gray-200 p-1 rounded-lg">
-                                            <div 
-                                                className="bg-gradient-to-r from-[#38B2AC] to-[#68D391] p-1 rounded-lg transition-all duration-500"
-                                                style={{ width: `${selectedProject?.pourcent || 0}%` }}
-                                            ></div>
-                                        </div>
-
+                                    </div>
+                                    <div className="w-full border border-gray-200 p-1 rounded-lg">
+                                        <div 
+                                            className="bg-gradient-to-r from-[#38B2AC] to-[#68D391] p-1 rounded-lg transition-all duration-500"
+                                            style={{ width: `${selectedProject?.pourcent || 0}%` }}
+                                        ></div>
+                                    </div>
                                 </div>
-                          
                             </div>           
-                          
                     </Box>
                     {selectedProject?.categories && <CategoriesList id={id} OnClick={()=>setShowCreateCategorie(true)}/>}
             </Box>
